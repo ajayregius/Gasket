@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Redirect output to stderr.
+exec 1>&2
+
+DBUSER="root"
+DBPASS=""
+DB="gg"
+SCHEMAPATH="DATABASE_DUMP"
+
+mysqldump -u $DBUSER --skip-extended-insert $DB > $SCHEMAPATH/$DB.sql
+
+exit 0
+
+
