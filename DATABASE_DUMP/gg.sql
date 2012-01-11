@@ -107,7 +107,7 @@ CREATE TABLE `wp_eo_events` (
   `reoccurrence_start` date NOT NULL,
   `reoccurrence_end` date NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +116,7 @@ CREATE TABLE `wp_eo_events` (
 
 LOCK TABLES `wp_eo_events` WRITE;
 /*!40000 ALTER TABLE `wp_eo_events` DISABLE KEYS */;
+INSERT INTO `wp_eo_events` VALUES (1,4,0,'2012-01-04','2012-01-11','00:00:00','23:59:59','yearly','',1,0,1,'2012-01-04','2012-01-04');
 /*!40000 ALTER TABLE `wp_eo_events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +208,7 @@ CREATE TABLE `wp_options` (
   `autoload` varchar(20) NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`option_id`),
   UNIQUE KEY `option_name` (`option_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,7 +340,7 @@ INSERT INTO `wp_options` VALUES (123,0,'_site_transient_timeout_poptags_40cd750b
 INSERT INTO `wp_options` VALUES (124,0,'_site_transient_poptags_40cd750bba9870f18aada2478b24840a','a:40:{s:6:\"widget\";a:3:{s:4:\"name\";s:6:\"widget\";s:4:\"slug\";s:6:\"widget\";s:5:\"count\";s:4:\"2477\";}s:4:\"post\";a:3:{s:4:\"name\";s:4:\"Post\";s:4:\"slug\";s:4:\"post\";s:5:\"count\";s:4:\"1672\";}s:6:\"plugin\";a:3:{s:4:\"name\";s:6:\"plugin\";s:4:\"slug\";s:6:\"plugin\";s:5:\"count\";s:4:\"1488\";}s:5:\"posts\";a:3:{s:4:\"name\";s:5:\"posts\";s:4:\"slug\";s:5:\"posts\";s:5:\"count\";s:4:\"1249\";}s:5:\"admin\";a:3:{s:4:\"name\";s:5:\"admin\";s:4:\"slug\";s:5:\"admin\";s:5:\"count\";s:4:\"1237\";}s:7:\"sidebar\";a:3:{s:4:\"name\";s:7:\"sidebar\";s:4:\"slug\";s:7:\"sidebar\";s:5:\"count\";s:4:\"1202\";}s:8:\"comments\";a:3:{s:4:\"name\";s:8:\"comments\";s:4:\"slug\";s:8:\"comments\";s:5:\"count\";s:3:\"881\";}s:6:\"images\";a:3:{s:4:\"name\";s:6:\"images\";s:4:\"slug\";s:6:\"images\";s:5:\"count\";s:3:\"809\";}s:7:\"twitter\";a:3:{s:4:\"name\";s:7:\"twitter\";s:4:\"slug\";s:7:\"twitter\";s:5:\"count\";s:3:\"778\";}s:4:\"page\";a:3:{s:4:\"name\";s:4:\"page\";s:4:\"slug\";s:4:\"page\";s:5:\"count\";s:3:\"758\";}s:6:\"google\";a:3:{s:4:\"name\";s:6:\"google\";s:4:\"slug\";s:6:\"google\";s:5:\"count\";s:3:\"739\";}s:5:\"links\";a:3:{s:4:\"name\";s:5:\"links\";s:4:\"slug\";s:5:\"links\";s:5:\"count\";s:3:\"686\";}s:5:\"image\";a:3:{s:4:\"name\";s:5:\"image\";s:4:\"slug\";s:5:\"image\";s:5:\"count\";s:3:\"675\";}s:3:\"seo\";a:3:{s:4:\"name\";s:3:\"seo\";s:4:\"slug\";s:3:\"seo\";s:5:\"count\";s:3:\"600\";}s:3:\"rss\";a:3:{s:4:\"name\";s:3:\"rss\";s:4:\"slug\";s:3:\"rss\";s:5:\"count\";s:3:\"530\";}s:7:\"gallery\";a:3:{s:4:\"name\";s:7:\"gallery\";s:4:\"slug\";s:7:\"gallery\";s:5:\"count\";s:3:\"517\";}s:7:\"widgets\";a:3:{s:4:\"name\";s:7:\"widgets\";s:4:\"slug\";s:7:\"widgets\";s:5:\"count\";s:3:\"445\";}s:5:\"pages\";a:3:{s:4:\"name\";s:5:\"pages\";s:4:\"slug\";s:5:\"pages\";s:5:\"count\";s:3:\"443\";}s:4:\"ajax\";a:3:{s:4:\"name\";s:4:\"AJAX\";s:4:\"slug\";s:4:\"ajax\";s:5:\"count\";s:3:\"439\";}s:9:\"wordpress\";a:3:{s:4:\"name\";s:9:\"wordpress\";s:4:\"slug\";s:9:\"wordpress\";s:5:\"count\";s:3:\"430\";}s:8:\"facebook\";a:3:{s:4:\"name\";s:8:\"Facebook\";s:4:\"slug\";s:8:\"facebook\";s:5:\"count\";s:3:\"428\";}s:6:\"social\";a:3:{s:4:\"name\";s:6:\"social\";s:4:\"slug\";s:6:\"social\";s:5:\"count\";s:3:\"400\";}s:9:\"shortcode\";a:3:{s:4:\"name\";s:9:\"shortcode\";s:4:\"slug\";s:9:\"shortcode\";s:5:\"count\";s:3:\"389\";}s:6:\"jquery\";a:3:{s:4:\"name\";s:6:\"jquery\";s:4:\"slug\";s:6:\"jquery\";s:5:\"count\";s:3:\"379\";}s:10:\"javascript\";a:3:{s:4:\"name\";s:10:\"javascript\";s:4:\"slug\";s:10:\"javascript\";s:5:\"count\";s:3:\"373\";}s:4:\"feed\";a:3:{s:4:\"name\";s:4:\"feed\";s:4:\"slug\";s:4:\"feed\";s:5:\"count\";s:3:\"355\";}s:10:\"buddypress\";a:3:{s:4:\"name\";s:10:\"buddypress\";s:4:\"slug\";s:10:\"buddypress\";s:5:\"count\";s:3:\"354\";}s:5:\"photo\";a:3:{s:4:\"name\";s:5:\"photo\";s:4:\"slug\";s:5:\"photo\";s:5:\"count\";s:3:\"354\";}s:5:\"video\";a:3:{s:4:\"name\";s:5:\"video\";s:4:\"slug\";s:5:\"video\";s:5:\"count\";s:3:\"350\";}s:5:\"email\";a:3:{s:4:\"name\";s:5:\"email\";s:4:\"slug\";s:5:\"email\";s:5:\"count\";s:3:\"345\";}s:5:\"media\";a:3:{s:4:\"name\";s:5:\"media\";s:4:\"slug\";s:5:\"media\";s:5:\"count\";s:3:\"345\";}s:6:\"photos\";a:3:{s:4:\"name\";s:6:\"photos\";s:4:\"slug\";s:6:\"photos\";s:5:\"count\";s:3:\"340\";}s:5:\"flash\";a:3:{s:4:\"name\";s:5:\"flash\";s:4:\"slug\";s:5:\"flash\";s:5:\"count\";s:3:\"328\";}s:4:\"tags\";a:3:{s:4:\"name\";s:4:\"tags\";s:4:\"slug\";s:4:\"tags\";s:5:\"count\";s:3:\"318\";}s:5:\"stats\";a:3:{s:4:\"name\";s:5:\"stats\";s:4:\"slug\";s:5:\"stats\";s:5:\"count\";s:3:\"312\";}s:4:\"link\";a:3:{s:4:\"name\";s:4:\"link\";s:4:\"slug\";s:4:\"link\";s:5:\"count\";s:3:\"309\";}s:7:\"content\";a:3:{s:4:\"name\";s:7:\"content\";s:4:\"slug\";s:7:\"content\";s:5:\"count\";s:3:\"301\";}s:8:\"category\";a:3:{s:4:\"name\";s:8:\"category\";s:4:\"slug\";s:8:\"category\";s:5:\"count\";s:3:\"289\";}s:7:\"comment\";a:3:{s:4:\"name\";s:7:\"comment\";s:4:\"slug\";s:7:\"comment\";s:5:\"count\";s:3:\"289\";}s:4:\"spam\";a:3:{s:4:\"name\";s:4:\"spam\";s:4:\"slug\";s:4:\"spam\";s:5:\"count\";s:3:\"283\";}}','yes');
 INSERT INTO `wp_options` VALUES (127,0,'uninstall_plugins','a:2:{i:0;b:0;s:35:\"event-organiser/event-organiser.php\";s:24:\"eventorganiser_uninstall\";}','yes');
 INSERT INTO `wp_options` VALUES (128,0,'eventorganiser_version','1.1','yes');
-INSERT INTO `wp_options` VALUES (129,0,'eventorganiser_options','a:8:{s:8:\"supports\";a:7:{i:0;s:5:\"title\";i:1;s:6:\"editor\";i:2;s:6:\"author\";i:3;s:9:\"thumbnail\";i:4;s:7:\"excerpt\";i:5;s:13:\"custom-fields\";i:6;s:8:\"comments\";}s:14:\"event_redirect\";s:6:\"events\";s:10:\"dateformat\";s:5:\"dd-mm\";s:9:\"prettyurl\";i:1;s:9:\"templates\";i:1;s:9:\"addtomenu\";i:0;s:17:\"excludefromsearch\";i:0;s:8:\"showpast\";i:0;}','yes');
+INSERT INTO `wp_options` VALUES (129,0,'eventorganiser_options','a:8:{s:8:\"supports\";a:7:{i:0;s:6:\"author\";i:1;s:9:\"thumbnail\";i:2;s:7:\"excerpt\";i:3;s:13:\"custom-fields\";i:4;s:8:\"comments\";i:5;s:5:\"title\";i:6;s:6:\"editor\";}s:14:\"event_redirect\";s:6:\"events\";s:10:\"dateformat\";s:5:\"dd-mm\";s:9:\"prettyurl\";i:1;s:9:\"templates\";i:1;s:9:\"addtomenu\";i:1;s:17:\"excludefromsearch\";i:0;s:8:\"showpast\";i:0;}','yes');
 INSERT INTO `wp_options` VALUES (130,0,'widget_eo_event_list_widget','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes');
 INSERT INTO `wp_options` VALUES (131,0,'widget_eo_calendar_widget','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes');
 INSERT INTO `wp_options` VALUES (132,0,'initial_db_version','18226','yes');
@@ -381,6 +382,8 @@ INSERT INTO `wp_options` VALUES (167,0,'_transient_dash_de3249c4736ad3bd2cd29147
 INSERT INTO `wp_options` VALUES (168,0,'_site_transient_update_themes','O:8:\"stdClass\":3:{s:12:\"last_checked\";i:1326251659;s:7:\"checked\";a:2:{s:12:\"twentyeleven\";s:3:\"1.3\";s:9:\"twentyten\";s:3:\"1.3\";}s:8:\"response\";a:0:{}}','yes');
 INSERT INTO `wp_options` VALUES (169,0,'_site_transient_update_plugins','O:8:\"stdClass\":3:{s:12:\"last_checked\";i:1326251725;s:7:\"checked\";a:3:{s:19:\"akismet/akismet.php\";s:5:\"2.5.4\";s:35:\"event-organiser/event-organiser.php\";s:3:\"1.1\";s:9:\"hello.php\";s:3:\"1.6\";}s:8:\"response\";a:0:{}}','yes');
 INSERT INTO `wp_options` VALUES (173,0,'event-category_children','a:0:{}','yes');
+INSERT INTO `wp_options` VALUES (174,0,'twentyeleven_theme_options','a:3:{s:12:\"color_scheme\";s:4:\"dark\";s:10:\"link_color\";s:7:\"#e4741f\";s:12:\"theme_layout\";s:15:\"sidebar-content\";}','yes');
+INSERT INTO `wp_options` VALUES (177,0,'theme_mods_twentyeleven','a:1:{s:18:\"nav_menu_locations\";a:1:{s:7:\"primary\";i:6;}}','yes');
 /*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +402,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +413,12 @@ LOCK TABLES `wp_postmeta` WRITE;
 /*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
 INSERT INTO `wp_postmeta` VALUES (1,2,'_wp_page_template','default');
 INSERT INTO `wp_postmeta` VALUES (2,4,'_edit_last','1');
-INSERT INTO `wp_postmeta` VALUES (3,4,'_edit_lock','1326252221:1');
+INSERT INTO `wp_postmeta` VALUES (3,4,'_edit_lock','1326253424:1');
+INSERT INTO `wp_postmeta` VALUES (4,4,'Website','http://google.com/');
+INSERT INTO `wp_postmeta` VALUES (5,5,'_wp_attached_file','2012/01/bZTkO.jpg');
+INSERT INTO `wp_postmeta` VALUES (6,5,'_wp_attachment_metadata','a:6:{s:5:\"width\";s:3:\"752\";s:6:\"height\";s:4:\"1024\";s:14:\"hwstring_small\";s:22:\"height=\'96\' width=\'70\'\";s:4:\"file\";s:17:\"2012/01/bZTkO.jpg\";s:5:\"sizes\";a:5:{s:9:\"thumbnail\";a:3:{s:4:\"file\";s:17:\"bZTkO-150x150.jpg\";s:5:\"width\";s:3:\"150\";s:6:\"height\";s:3:\"150\";}s:6:\"medium\";a:3:{s:4:\"file\";s:17:\"bZTkO-220x300.jpg\";s:5:\"width\";s:3:\"220\";s:6:\"height\";s:3:\"300\";}s:14:\"post-thumbnail\";a:3:{s:4:\"file\";s:17:\"bZTkO-752x288.jpg\";s:5:\"width\";s:3:\"752\";s:6:\"height\";s:3:\"288\";}s:13:\"large-feature\";a:3:{s:4:\"file\";s:17:\"bZTkO-752x288.jpg\";s:5:\"width\";s:3:\"752\";s:6:\"height\";s:3:\"288\";}s:13:\"small-feature\";a:3:{s:4:\"file\";s:17:\"bZTkO-220x300.jpg\";s:5:\"width\";s:3:\"220\";s:6:\"height\";s:3:\"300\";}}s:10:\"image_meta\";a:10:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";}}');
+INSERT INTO `wp_postmeta` VALUES (7,4,'_thumbnail_id','5');
+INSERT INTO `wp_postmeta` VALUES (8,4,'email','phil@wattagan.com');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -450,7 +458,7 @@ CREATE TABLE `wp_posts` (
   KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
   KEY `post_parent` (`post_parent`),
   KEY `post_author` (`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -462,7 +470,9 @@ LOCK TABLES `wp_posts` WRITE;
 INSERT INTO `wp_posts` VALUES (1,1,'2012-01-11 03:07:40','2012-01-11 03:07:40','Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!','Hello world!','','publish','open','open','','hello-world','','','2012-01-11 03:07:40','2012-01-11 03:07:40','',0,'http://localhost/events/?p=1',0,'post','',1);
 INSERT INTO `wp_posts` VALUES (2,1,'2012-01-11 03:07:40','2012-01-11 03:07:40','This is an example page. It\'s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:\n\n<blockquote>Hi there! I\'m a bike messenger by day, aspiring actor by night, and this is my blog. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin\' caught in the rain.)</blockquote>\n\n...or something like this:\n\n<blockquote>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickies to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</blockquote>\n\nAs a new WordPress user, you should go to <a href=\"http://localhost/events/wp-admin/\">your dashboard</a> to delete this page and create new pages for your content. Have fun!','Sample Page','','publish','open','open','','sample-page','','','2012-01-11 03:07:40','2012-01-11 03:07:40','',0,'http://localhost/events/?page_id=2',0,'page','',0);
 INSERT INTO `wp_posts` VALUES (3,1,'2012-01-11 03:08:15','0000-00-00 00:00:00','','Auto Draft','','auto-draft','open','open','','','','','2012-01-11 03:08:15','0000-00-00 00:00:00','',0,'http://localhost/events/?p=3',0,'post','',0);
-INSERT INTO `wp_posts` VALUES (4,1,'2012-01-11 03:18:41','0000-00-00 00:00:00','This is basic wordpress editor\n\n&nbsp;\n<blockquote>Quote</blockquote>','Test Event One','','draft','open','open','','','','','2012-01-11 03:18:41','2012-01-11 03:18:41','',0,'http://localhost/events/?post_type=event&#038;p=4',0,'event','',0);
+INSERT INTO `wp_posts` VALUES (4,1,'2012-01-11 03:41:04','2012-01-11 03:41:04','This is basic wordpress editor\r\n\r\n&nbsp;\r\n<blockquote>Quote</blockquote>','Test Event One','This is the excerpt','publish','open','open','','test-event-one','','','2012-01-11 03:41:50','2012-01-11 03:41:50','',0,'http://localhost/events/?post_type=event&#038;p=4',0,'event','',0);
+INSERT INTO `wp_posts` VALUES (5,1,'2012-01-11 03:40:26','2012-01-11 03:40:26','','bZTkO','','inherit','open','open','','bztko','','','2012-01-11 03:40:26','2012-01-11 03:40:26','',4,'http://localhost/events/wp-content/uploads/2012/01/bZTkO.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (6,1,'2012-01-11 03:42:58','2012-01-11 03:42:58','This is basic wordpress editor\n\n&nbsp;\n<blockquote>Quote</blockquote>','Test Event One','This is the excerpt','inherit','open','open','','4-autosave','','','2012-01-11 03:42:58','2012-01-11 03:42:58','',4,'http://localhost/events/?p=6',0,'revision','',0);
 /*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,6 +503,8 @@ INSERT INTO `wp_term_relationships` VALUES (1,2,0);
 INSERT INTO `wp_term_relationships` VALUES (2,2,0);
 INSERT INTO `wp_term_relationships` VALUES (3,2,0);
 INSERT INTO `wp_term_relationships` VALUES (4,2,0);
+INSERT INTO `wp_term_relationships` VALUES (4,3,0);
+INSERT INTO `wp_term_relationships` VALUES (4,4,0);
 INSERT INTO `wp_term_relationships` VALUES (5,2,0);
 INSERT INTO `wp_term_relationships` VALUES (6,2,0);
 INSERT INTO `wp_term_relationships` VALUES (7,2,0);
@@ -516,7 +528,7 @@ CREATE TABLE `wp_term_taxonomy` (
   PRIMARY KEY (`term_taxonomy_id`),
   UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
   KEY `taxonomy` (`taxonomy`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -527,9 +539,10 @@ LOCK TABLES `wp_term_taxonomy` WRITE;
 /*!40000 ALTER TABLE `wp_term_taxonomy` DISABLE KEYS */;
 INSERT INTO `wp_term_taxonomy` VALUES (1,1,'category','',0,1);
 INSERT INTO `wp_term_taxonomy` VALUES (2,2,'link_category','',0,7);
-INSERT INTO `wp_term_taxonomy` VALUES (3,3,'event-category','',0,0);
-INSERT INTO `wp_term_taxonomy` VALUES (4,4,'event-category','',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (3,3,'event-category','',0,1);
+INSERT INTO `wp_term_taxonomy` VALUES (4,4,'event-category','',0,1);
 INSERT INTO `wp_term_taxonomy` VALUES (5,5,'event-category','',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (6,6,'nav_menu','',0,0);
 /*!40000 ALTER TABLE `wp_term_taxonomy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,7 +561,7 @@ CREATE TABLE `wp_terms` (
   PRIMARY KEY (`term_id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -562,6 +575,7 @@ INSERT INTO `wp_terms` VALUES (2,'Blogroll','blogroll',0);
 INSERT INTO `wp_terms` VALUES (3,'Cars','cars',0);
 INSERT INTO `wp_terms` VALUES (4,'Trucks','trucks',0);
 INSERT INTO `wp_terms` VALUES (5,'Tractors','tractors',0);
+INSERT INTO `wp_terms` VALUES (6,'Main Menu','main-menu',0);
 /*!40000 ALTER TABLE `wp_terms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -580,7 +594,7 @@ CREATE TABLE `wp_usermeta` (
   PRIMARY KEY (`umeta_id`),
   KEY `user_id` (`user_id`),
   KEY `meta_key` (`meta_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -605,6 +619,11 @@ INSERT INTO `wp_usermeta` VALUES (14,1,'wp_capabilities','a:1:{s:13:\"administra
 INSERT INTO `wp_usermeta` VALUES (15,1,'wp_user_level','10');
 INSERT INTO `wp_usermeta` VALUES (16,1,'wp_dashboard_quick_press_last_post_id','3');
 INSERT INTO `wp_usermeta` VALUES (17,1,'dismissed_wp_pointers','wp330_media_uploader');
+INSERT INTO `wp_usermeta` VALUES (18,1,'wp_user-settings','urlbutton=none');
+INSERT INTO `wp_usermeta` VALUES (19,1,'wp_user-settings-time','1326253262');
+INSERT INTO `wp_usermeta` VALUES (20,1,'managenav-menuscolumnshidden','a:4:{i:0;s:11:\"link-target\";i:1;s:11:\"css-classes\";i:2;s:3:\"xfn\";i:3;s:11:\"description\";}');
+INSERT INTO `wp_usermeta` VALUES (21,1,'metaboxhidden_nav-menus','a:4:{i:0;s:8:\"add-post\";i:1;s:9:\"add-event\";i:2;s:12:\"add-post_tag\";i:3;s:18:\"add-event-category\";}');
+INSERT INTO `wp_usermeta` VALUES (22,1,'closedpostboxes_nav-menus','a:0:{}');
 /*!40000 ALTER TABLE `wp_usermeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,4 +670,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-01-11 14:24:05
+-- Dump completed on 2012-01-11 14:48:17
