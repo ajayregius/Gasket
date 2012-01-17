@@ -1,11 +1,10 @@
 === Event Organiser ===
 Contributors: stephenh1988
 Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
-Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows, locations, venues, Google Map, event categories, ICAL
-
+Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -33,7 +32,7 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)
 * The **Venue map shortcodes** to display a map of a venue
 *  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
 * **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder 
-* **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) documentation or the included template files.
+* **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) or the included template files.
 * Assign events to categories, and view events by category
 * Venue pages, to view events by venue
 * Export events to .ics file
@@ -84,6 +83,9 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.1.1 =
+A minor update, fixing a few bugs and improving the (admin and public) calendars' performance. The bug which meant calendars and the calendar widget couldn't be displayed together is now fixed. For a full list of alterations [see here](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/bug-fixing-update-due-1-1-1/).
 
 = 1.1 =
 Improved admin calendar navigation, with category/venue filters. Public version of the 'admin calendar' now available as a shortcode. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed a few bugs.

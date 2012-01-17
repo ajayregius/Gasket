@@ -41,7 +41,12 @@ class EventOrganiser_Shortcodes {
 		$n = rand(0,100);
 		self::$fullcal =array_merge($atts);
 		self::$add_script = true;
- 		return '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
+
+		$html='<div id="eo_fullcalendar_'.$n.'_loading" style="background:white;position:absolute;z-index:5" >';
+		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />Loading...</div>';
+		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
+
+ 		return $html;
 	}
 
 	function handle_venuemap_shortcode($atts) {
@@ -58,7 +63,7 @@ class EventOrganiser_Shortcodes {
 		} 
 		
 		//Set the attributes
-		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'300px';
+		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
 		$atts['height'] = ( !empty($atts['height']) ) ? $atts['height']:'200px';
 
 		 //If class is selected use that style, otherwise use specified height and width
@@ -118,16 +123,13 @@ class EventOrganiser_Shortcodes {
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'fullcal' => self::$fullcal,
 			'map' => self::$map
-		));		
-		wp_print_scripts('eo_front');	
+		));	
+		if(!empty(self::$fullcal))
+			wp_enqueue_style('eo_calendar-style');	
+		wp_enqueue_script( 'eo_front');	
 	}
 }
  
 EventOrganiser_Shortcodes::init();
 
-/*Add styles for the full claendar */
-add_action('wp_enqueue_scripts', 'eventorganiser_add_fullcalendar');
-function eventorganiser_add_fullcalendar(){
-	wp_enqueue_style('eo_calendar-style');
-}
 ?>
