@@ -10,7 +10,7 @@ do
 done
 }
 
-function dodump(){
+function doimport(){
 	# Redirect output to stderr.
 	exec 1>&2
 
@@ -21,9 +21,9 @@ function dodump(){
 	SCHEMAPATH="!DATABASE"
 
 	echo
-	echo "Dumping database $DB from $DBHOST to $SCHEMAPATH/$DB.sql"
+	echo "Importing $SCHEMAPATH/$DB.sql to $DB on $DBHOST"
 	echo
-	mysqldump -h $DBHOST -u $DBUSER --skip-extended-insert $DB > $SCHEMAPATH/$DB.sql
+	mysql -h $DBHOST -u $DBUSER $DB < $SCHEMAPATH/$DB.sql
 }
 
 # Start it in the background
@@ -33,7 +33,7 @@ progress &
 MYSELF=$!
 
 # Start backup
-dodump
+doimport
 
 # Kill progress
 kill $MYSELF &>/dev/null
