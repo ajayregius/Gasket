@@ -1,0 +1,18 @@
+/*
+Theme Name:     Gasket Guide
+Theme URI:      http: //example.com/
+Description:    Theme for Gasket Guide - because all machinery has gaskets 
+Author:         Jacob Dorman & Phil Dorman
+Author URI:     http: //imagomedia.com.au/
+Template:       twentyeleven
+Version:        0.1.0
+*/
+
+/* Import all styles from old theme for now.
+ * Can override them below because CSS is cascading
+ * Rules of the same specificity occuring later in the stylesheet take precendence */
+@import url("../twentyeleven/style.css");
+
+body{
+	background:#333;
+}
