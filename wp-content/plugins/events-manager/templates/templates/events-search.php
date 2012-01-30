@@ -21,27 +21,15 @@
 	?>
 	<form action="<?php echo EM_URI; ?>" method="post" class="em-events-search-form">
 		<?php do_action('em_template_events_search_form_header'); ?>
-		
+		General search word
 		<?php if( !empty($search_text) || (get_option('dbem_search_form_text') && empty($search_text)) ): ?>
 		<!-- START General Search -->
 		<?php /* This general search will find matches within event_name, event_notes, and the location_name, address, town, state and country. */ ?>
 		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo $s; ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'" />
 		<!-- END General Search -->
-		<?php endif; ?>
-		
-		<?php if( !empty($search_dates) || (get_option('dbem_search_form_dates') && empty($search_dates)) ): ?>
-		<!-- START Date Search -->
-		<span class="em-events-search-dates">
-			<?php _e('between','dbem'); ?>:
-			<input type="text" id="em-date-start-loc" />
-			<input type="hidden" id="em-date-start" name="scope[0]" value="<?php if( !empty($_REQUEST['scope'][0]) ) echo $_REQUEST['scope'][0]; ?>" />
-			<?php _e('and','dbem'); ?>
-			<input type="text" id="em-date-end-loc" />
-			<input type="hidden" id="em-date-end" name="scope[1]" value="<?php if( !empty($_REQUEST['scope'][1]) ) echo $_REQUEST['scope'][1]; ?>" />
-		</span>
-		<!-- END Date Search -->
-		<?php endif; ?>
-		
+		<?php endif; ?>		
+		optional
+		<br/>
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START Category Search -->
 		<select name="category" class="em-events-search-category">
@@ -53,6 +41,16 @@
 		<!-- END Category Search -->
 		<?php endif; ?>
 		
+		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
+		<!-- START multi select Category Search -->	
+			<input name="CatAll" type="checkbox" value="ALL">All
+			<br>		
+			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
+			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
+			<?php endforeach; ?>		
+		<!-- END Category Search -->
+		<?php endif; ?>
+		<br/>
 		<?php if( !empty($search_countries) || (get_option('dbem_search_form_countries') && empty($search_countries)) ): ?>
 		<!-- START Country Search -->
 		<select name="country" class="em-events-search-country">
@@ -92,6 +90,7 @@
 		
 		<?php if( !empty($search_states) || (get_option('dbem_search_form_states') && empty($search_states)) ): ?>
 		<!-- START State/County Search -->
+		Choose state
 		<select name="state" class="em-events-search-state">
 			<option value=''><?php echo get_option('dbem_search_form_states_label'); ?></option>
 			<?php 
@@ -108,6 +107,7 @@
 			?>
 		</select>
 		<!-- END State/County Search -->
+		or distance from Postcode
 		<?php endif; ?>
 		
 		<?php if( !empty($search_towns) || (get_option('dbem_search_form_towns') && empty($search_towns)) ): ?>
@@ -129,6 +129,21 @@
 		</select>
 		<!-- END City Search -->
 		<?php endif; ?>
+
+		<?php if( !empty($search_dates) || (get_option('dbem_search_form_dates') && empty($search_dates)) ): ?>
+		<br/>
+		<!-- START Date Search -->
+		<span class="em-events-search-dates">
+			<?php _e('Dates from','dbem'); ?>:
+			<input type="text" id="em-date-start-loc" />
+			<input type="hidden" id="em-date-start" name="scope[0]" value="<?php if( !empty($_REQUEST['scope'][0]) ) echo $_REQUEST['scope'][0]; ?>" />
+			<?php _e('to','dbem'); ?>
+			<input type="text" id="em-date-end-loc" />
+			<input type="hidden" id="em-date-end" name="scope[1]" value="<?php if( !empty($_REQUEST['scope'][1]) ) echo $_REQUEST['scope'][1]; ?>" />
+		</span>
+		<!-- END Date Search -->
+		<?php endif; ?>
+
 		
 		<?php do_action('em_template_events_search_form_ddm'); //depreciated, don't hook, use the one below ?>
 		<?php do_action('em_template_events_search_form_footer'); ?>
