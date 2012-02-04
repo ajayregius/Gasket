@@ -150,6 +150,7 @@ class EM_Object {
 		$recurring = $args['recurring'];
 		$recurrence = $args['recurrence'];
 		$category = $args['category'];
+		$categories = $args['category[]'];		
 		$tag = $args['tag'];
 		$location = $args['location'];
 		$bookings = $args['rsvp'];
@@ -324,6 +325,9 @@ class EM_Object {
 		//Add conditions for category selection
 		//Filter by category, can be id or comma seperated ids
 		//TODO create an exclude category option
+		//print_r($category);
+		//echo "<br/>";
+		//print_r($categories);
 		if ( is_numeric($category) && $category > 0 ){
 			//get the term id directly
 			$term = new EM_Category($category);

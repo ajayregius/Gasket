@@ -30,17 +30,7 @@
 		<?php endif; ?>		
 		optional
 		<br/>
-		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
-		<!-- START Category Search -->
-		<select name="category" class="em-events-search-category">
-			<option value=''><?php echo get_option('dbem_search_form_categories_label') ?></option>
-			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
-			 <option value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?></option>
-			<?php endforeach; ?>
-		</select>
-		<!-- END Category Search -->
-		<?php endif; ?>
-		
+
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	
 			<input name="CatAll" type="checkbox" value="ALL">All
@@ -48,7 +38,7 @@
 			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
 			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
 			<?php endforeach; ?>		
-		<!-- END Category Search -->
+		<!-- END Multi Category Search -->
 		<?php endif; ?>
 		<br/>
 		<?php if( !empty($search_countries) || (get_option('dbem_search_form_countries') && empty($search_countries)) ): ?>

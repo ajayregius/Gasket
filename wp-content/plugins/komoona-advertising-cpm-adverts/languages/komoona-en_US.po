@@ -1,0 +1,361 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Komoona Ads\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-13 15:05+0200\n"
+"PO-Revision-Date: 2011-09-13 15:05+0200\n"
+"Last-Translator: Tzafrir Ben Ami <tzafrir@komoona.com>\n"
+"Language-Team: Komoon Support <support@komoona.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Komoona_Func.php:108
+msgid "advertise, advertising, google, adsense, google adsense, wordpress adsense, wordpress google, wordpress google adsense, make money, google adsense money, self serve banners, ad rotation, rotate google adsense, monetize, monetize google adsense, google adsense companion"
+msgstr "advertise, advertising, google, adsense, google adsense, wordpress adsense, wordpress google, wordpress google adsense, make money, google adsense money, self serve banners, ad rotation, rotate google adsense, monetize, monetize google adsense, google adsense companion"
+
+#: Komoona_Func.php:240
+msgid "English"
+msgstr "English"
+
+#: Komoona_Func.php:241
+msgid "Deutsch"
+msgstr "Deutsch"
+
+#: Komoona_Func.php:242
+msgid "Française"
+msgstr "Française"
+
+#: Komoona_Func.php:243
+msgid "Português"
+msgstr "Português"
+
+#: Komoona_Func.php:244
+msgid "Español"
+msgstr "Español"
+
+#: Komoona_Func.php:245
+msgid "日本"
+msgstr "日本"
+
+#: Komoona_Func.php:246
+msgid "Polski"
+msgstr "Polski"
+
+#: Komoona_Func.php:247
+msgid "Türkçe"
+msgstr "Türkçe"
+
+#: Komoona_Func.php:248
+msgid "Nederlands"
+msgstr "Nederlands"
+
+#: Komoona_Func.php:249
+msgid "ελληνικά"
+msgstr "ελληνικά"
+
+#: Komoona_Func.php:250
+msgid "Pусский"
+msgstr "Pусский"
+
+#: Komoona_Func.php:251
+msgid "Mакедонски"
+msgstr "Mакедонски"
+
+#: Komoona_Func.php:261
+msgid "USD"
+msgstr "USD"
+
+#: Komoona_Func.php:262
+msgid "AUD"
+msgstr "AUD"
+
+#: Komoona_Func.php:263
+msgid "CAD"
+msgstr "CAD"
+
+#: Komoona_Func.php:264
+msgid "EUR"
+msgstr "EUR"
+
+#: Komoona_Func.php:265
+msgid "JPY"
+msgstr "JPY"
+
+#: Komoona_Func.php:266
+msgid "GBP"
+msgstr "GBP"
+
+#: Komoona_Func.php:277
+msgid "125x125"
+msgstr "125x125"
+
+#: Komoona_Func.php:278
+msgid "200x200"
+msgstr "200x200"
+
+#: Komoona_Func.php:279
+msgid "250x250"
+msgstr "250x250"
+
+#: Komoona_Func.php:282
+msgid "180x150"
+msgstr "180x150"
+
+#: Komoona_Func.php:283
+msgid "175x250"
+msgstr "175x250"
+
+#: Komoona_Func.php:284
+msgid "300x250"
+msgstr "300x250"
+
+#: Komoona_Func.php:285
+msgid "300x100"
+msgstr "300x100"
+
+#: Komoona_Func.php:288
+msgid "336x280"
+msgstr "336x280"
+
+#: Komoona_Func.php:291
+msgid "728x90"
+msgstr "728x90"
+
+#: Komoona_Func.php:292
+msgid "468x60"
+msgstr "468x60"
+
+#: Komoona_Func.php:295
+msgid "434x30"
+msgstr "434x30"
+
+#: Komoona_Func.php:298
+msgid "120x240"
+msgstr "120x240"
+
+#: Komoona_Func.php:301
+msgid "160x600"
+msgstr "160x600"
+
+#: Komoona_Func.php:302
+msgid "120x600"
+msgstr "120x600"
+
+#: Komoona_Func.php:325
+msgid "Create Komoona Account"
+msgstr "Create Komoona Account"
+
+#: Komoona_Func.php:326
+msgid "Please provide your email and choose a password so we can notify you when advertisers want to directly buy your ad space"
+msgstr "Please provide your email and choose a password so we can notify you when advertisers want to directly buy your ad space"
+
+#: Komoona_Func.php:327
+msgid "Already Have Komoona Account?"
+msgstr "Already Have Komoona Account?"
+
+#: Komoona_Func.php:335
+msgid "Your Email"
+msgstr "Your Email"
+
+#: Komoona_Func.php:347
+msgid "Your email will also serve as your Komoona username"
+msgstr "Your email will also serve as your Komoona username"
+
+#: Komoona_Func.php:357
+#: Komoona_Func.php:608
+msgid "Password"
+msgstr "Password"
+
+#: Komoona_Func.php:371
+#: Komoona_Func.php:623
+msgid "Edit my theme (advanced users)"
+msgstr "Edit my theme (advanced users)"
+
+#: Komoona_Func.php:384
+#: Komoona_Func.php:635
+msgid "Single Ad Unit Size"
+msgstr "Single Ad Unit Size"
+
+#: Komoona_Func.php:393
+#: Komoona_Func.php:645
+msgid "Paste Your Entire Adsense Code"
+msgstr "Paste Your Entire Adsense Code"
+
+#: Komoona_Func.php:396
+#: Komoona_Func.php:648
+msgid "Where do I get the AdSense code?"
+msgstr "Where do I get the AdSense code?"
+
+#: Komoona_Func.php:401
+#: Komoona_Func.php:653
+msgid "Single Ad Unit Price"
+msgstr "Single Ad Unit Price"
+
+#: Komoona_Func.php:411
+msgid "By default, you set the price for 7 day ad. You can later change this and define price for additional periods (i.e. price for 30 day ad) from the control panel."
+msgstr "By default, you set the price for 7 day ad. You can later change this and define price for additional periods (i.e. price for 30 day ad) from the control panel."
+
+#: Komoona_Func.php:417
+#: Komoona_Func.php:669
+msgid "Ad Wizard Language"
+msgstr "Ad Wizard Language"
+
+#: Komoona_Func.php:423
+msgid "You can choose which language the Komoona Ad Wizard will be displayed in."
+msgstr "You can choose which language the Komoona Ad Wizard will be displayed in."
+
+#: Komoona_Func.php:439
+msgid "Use Komoona Billing via PayPal"
+msgstr "Use Komoona Billing via PayPal"
+
+#: Komoona_Func.php:442
+msgid "Komoona will bill and invoice your advertisers using PayPal"
+msgstr "Komoona will bill and invoice your advertisers using PayPal"
+
+#: Komoona_Func.php:443
+msgid "Advertisers can pay by credit card without leaving your site"
+msgstr "Advertisers can pay by credit card without leaving your site"
+
+#: Komoona_Func.php:443
+msgid "(verified sites only)"
+msgstr "(verified sites only)"
+
+#: Komoona_Func.php:444
+msgid "No need for a PayPal Merchant account"
+msgstr "No need for a PayPal Merchant account"
+
+#: Komoona_Func.php:446
+#, php-format
+msgid "a standard 9.62% billing charge applies"
+msgstr "a standard 9.62% billing charge applies"
+
+#: Komoona_Func.php:451
+msgid "Use Your Own Paypal Merchant Account For Billing"
+msgstr "Use Your Own Paypal Merchant Account For Billing"
+
+#: Komoona_Func.php:454
+msgid "You must have a PayPal Merchant Account (set to 'authorize')"
+msgstr "You must have a PayPal Merchant Account (set to 'authorize')"
+
+#: Komoona_Func.php:455
+msgid "Advertisers will not be able to pay by credit card"
+msgstr "Advertisers will not be able to pay by credit card"
+
+#: Komoona_Func.php:456
+msgid "Advertisers will leave your site and will be re directed to PayPal in order to complete payment"
+msgstr "Advertisers will leave your site and will be re directed to PayPal in order to complete payment"
+
+#: Komoona_Func.php:457
+msgid "You will need to authorize the payment in your PayPal account, and authorize the new ad in your Komoona Control Panel separately"
+msgstr "You will need to authorize the payment in your PayPal account, and authorize the new ad in your Komoona Control Panel separately"
+
+#: Komoona_Func.php:471
+msgid "I have read and agree to the"
+msgstr "I have read and agree to the"
+
+#: Komoona_Func.php:472
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+#: Komoona_Func.php:475
+msgid "Create"
+msgstr "Create"
+
+#: Komoona_Func.php:483
+msgid "Please wait while we create your account"
+msgstr "Please wait while we create your account"
+
+#: Komoona_Func.php:516
+msgid "If you want to display the Komoona ads in different section of your site or if you would like to display multiple ad units on your page, you'll need to edit your WordPress theme's HTML source code - please refer to the 'Advances Setting' section below."
+msgstr "If you want to display the Komoona ads in different section of your site or if you would like to display multiple ad units on your page, you'll need to edit your WordPress theme's HTML source code - please refer to the 'Advances Setting' section below."
+
+#: Komoona_Func.php:519
+msgid "Komoona Control Panel"
+msgstr "Komoona Control Panel"
+
+#: Komoona_Func.php:530
+#: Komoona_Func.php:713
+msgid "Copy the 'Komoona Snippet Code' (below) in to your site's template code according to where you want the ads to display – you can also<br/>read our"
+msgstr "Copy the 'Komoona Snippet Code' (below) in to your site's template code according to where you want the ads to display – you can also<br/>read our"
+
+#: Komoona_Func.php:535
+#: Komoona_Func.php:718
+msgid "Komoona Snippet Code"
+msgstr "Komoona Snippet Code"
+
+#: Komoona_Func.php:541
+msgid "Komoona Script URL"
+msgstr "Komoona Script URL"
+
+#: Komoona_Func.php:549
+#: Komoona_Func.php:726
+msgid "Save Changes"
+msgstr "Save Changes"
+
+#: Komoona_Func.php:561
+msgid "To get your Google AdSense code, sign into your Google AdSense account and create new ad unit or edit an existing one.<br/><br/>The code should look similar to the image below:"
+msgstr "To get your Google AdSense code, sign into your Google AdSense account and create new ad unit or edit an existing one.<br/><br/>The code should look similar to the image below:"
+
+#: Komoona_Func.php:565
+msgid "AdSense Help"
+msgstr "AdSense Help"
+
+#: Komoona_Func.php:576
+msgid "Add Komoona Site To Your Account"
+msgstr "Add Komoona Site To Your Account"
+
+#: Komoona_Func.php:578
+msgid "Before you can start using the Komoona plugin, you need to define your site. Please provide the following details:"
+msgstr "Before you can start using the Komoona plugin, you need to define your site. Please provide the following details:"
+
+#: Komoona_Func.php:580
+msgid "Don't Have Account on Komoona?"
+msgstr "Don't Have Account on Komoona?"
+
+#: Komoona_Func.php:586
+msgid "Komoona Username"
+msgstr "Komoona Username"
+
+#: Komoona_Func.php:598
+msgid "Insert your existing Komoona username and password"
+msgstr "Insert your existing Komoona username and password"
+
+#: Komoona_Func.php:628
+msgid "After completing this stage please open the 'Advanced Settings' section and copy the 'Komoona Snippet Code' in to your site's template according to where you want the ads to display"
+msgstr "After completing this stage please open the 'Advanced Settings' section and copy the 'Komoona Snippet Code' in to your site's template according to where you want the ads to display"
+
+#: Komoona_Func.php:682
+msgid "Create Site"
+msgstr "Create Site"
+
+#: Komoona_Func.php:690
+msgid "Please wait while we validate your account"
+msgstr "Please wait while we validate your account"
+
+#: Komoona_Func.php:702
+msgid "It seems that Komoona is already installed in your site. To add new placement please log in to Komoona control panel, create new ad placement and follow the installation instructions"
+msgstr "It seems that Komoona is already installed in your site. To add new placement please log in to Komoona control panel, create new ad placement and follow the installation instructions"
+
+#: Komoona_Widget.php:79
+msgid "Your plugin is not configured yet."
+msgstr "Your plugin is not configured yet."
+
+#: Komoona_Widget.php:79
+msgid "Please go to the plugin"
+msgstr "Please go to the plugin"
+
+#: Komoona_Widget.php:79
+msgid " to start using the plugin"
+msgstr " to start using the plugin"
+
+#: Komoona_Widget.php:83
+msgid "Title:"
+msgstr "Title:"
+
