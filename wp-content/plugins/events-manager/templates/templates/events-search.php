@@ -5,6 +5,7 @@
  * You also must keep the _wpnonce hidden field in this form too.
  */
 ?>
+
 <div class="em-events-search">
 	<?php 
 	global $em_localized_js;
@@ -31,12 +32,21 @@
 		optional
 		<br/>
 
+<script type="text/javascript" src="script.js">		
+function AllCatsOn(QryForm)
+{
+	alert("hi");
+	QryForm.category[1].checked=true;
+	document.getElementById('categoryChkBox').checked=false;
+}	
+</script>
+
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	
-			<input name="CatAll" type="checkbox" value="ALL">All
+			<input ID="AllCatsChkBox" name="CatAll" type="checkbox" OnClick="AllCatsOn(this.form)" value="ALL">Click for All categories.
 			<br>		
 			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
-			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
+			 <input id="categoryChkBox" name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
 			<?php endforeach; ?>		
 		<!-- END Multi Category Search -->
 		<?php endif; ?>
