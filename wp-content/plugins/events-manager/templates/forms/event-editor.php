@@ -96,8 +96,18 @@ if( !empty($_REQUEST['success']) && get_option('dbem_events_form_reshow') ){
 		</div>
 		<?php endif; ?>
 		
-		<h4 class="event-form-details"><?php _e ( 'Details', 'dbem' ); ?></h4>
 		<div class="inside event-form-details">
+			<h4 class="event-form-details"><?php _e ( 'Short Description', 'dbem' ); //TODO add translation text if ever multilingual ?></h4>
+			<div class="event-editor">
+				<?php if( get_option('dbem_events_form_editor') && function_exists('wp_editor') ): ?>
+					<?php wp_editor($EM_Event->post_excerpt, 'em-editor-excerpt', array('textarea_name' => 'excerpt', 'textarea_rows' => 5 ) ); ?> 
+				<?php else: ?>
+					<textarea name="content" rows="5" style="width:80%"><?php echo $EM_Event->post_content ?></textarea>
+					<br />
+					<?php _e ( 'Short description of the event.', 'dbem' ) //TODO translation?><?php _e ( 'HTML Allowed.', 'dbem' )?>
+				<?php endif; ?>
+			</div>
+			<h4 class="event-form-details"><?php _e ( 'Details', 'dbem' ); ?></h4>
 			<div class="event-editor">
 				<?php if( get_option('dbem_events_form_editor') && function_exists('wp_editor') ): ?>
 					<?php wp_editor($EM_Event->post_content, 'em-editor-content', array('textarea_name'=>'content') ); ?> 
