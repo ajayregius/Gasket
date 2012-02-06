@@ -46,6 +46,7 @@ class EM_Event extends EM_Object{
 	var $event_start_date;
 	var $event_end_date;
 	var $post_content;
+	//TODO Should excerpt go here too?
 	var $event_rsvp;
 	//var $spaces;
 	var $location_id;
@@ -293,6 +294,7 @@ class EM_Event extends EM_Object{
 			$this->event_name = $event_post->post_title;
 			$this->event_owner = $event_post->post_author;
 			$this->post_content = $event_post->post_content;
+			$this->post_excerpt = $event_post->post_excerpt;
 			$this->event_slug = $event_post->post_name;
 			$this->event_modified = $event_post->post_modified;
 			foreach( $event_post as $key => $value ){ //merge post object into this object
@@ -313,6 +315,7 @@ class EM_Event extends EM_Object{
 		global $allowedposttags;
 		//we need to get the post/event name and content.... that's it.
 		$this->post_content = !empty($_POST['content']) ? wp_kses($_POST['content'], $allowedposttags):'';
+		$this->post_excerpt = !empty($_POST['excerpt']) ? wp_kses($_POST['excerpt'], $allowedposttags):'';
 		$this->event_name = !empty($_POST['event_name']) ? wp_kses($_POST['event_name'], array()):'';
 		$this->post_type = ($this->is_recurring() || !empty($_POST['recurring'])) ? 'event-recurring':EM_POST_TYPE_EVENT;
 		//don't forget categories!
@@ -488,11 +491,12 @@ class EM_Event extends EM_Object{
 			}else{
 				$post_array = (array) get_post($this->post_id);
 			}
-		}
+		}//build url
 		//Overwrite new post info
 		$post_array['post_type'] = ($this->recurrence && get_option('dbem_recurrence_enabled')) ? 'event-recurring':EM_POST_TYPE_EVENT;
 		$post_array['post_title'] = $this->event_name;
 		$post_array['post_content'] = $this->post_content;
+		$post_array['post_excerpt'] = $this->post_excerpt;
 		//decide on post status
 		if( count($this->errors) == 0 ){
 			$post_array['post_status'] = ( $this->can_manage('publish_events','publish_events') ) ? 'publish':'pending';
@@ -1318,11 +1322,11 @@ class EM_Event extends EM_Object{
 						$dateEnd = date('Ymd\THis\Z',$this->end - (60*60*get_option('gmt_offset')));
 					}
 					//build url
-					$gcal_url = 'http://www.google.com/calendar/event?action=TEMPLATE&text=event_name&dates=start_date/end_date&details=post_content&location=location_name&trp=false&sprop=event_url&sprop=name:blog_name';
+					$gcal_url = 'http://www.google.com/calendar/event?action=TEMPLATE&text=event_name&dates=start_date/end_date&details=post_excerpt&location=location_name&trp=false&sprop=event_url&sprop=name:blog_name';
 					$gcal_url = str_replace('event_name', urlencode($this->event_name), $gcal_url);
 					$gcal_url = str_replace('start_date', urlencode($dateStart), $gcal_url);
 					$gcal_url = str_replace('end_date', urlencode($dateEnd), $gcal_url);
-					$gcal_url = str_replace('post_content', urlencode($this->post_content), $gcal_url);
+					$gcal_url = str_replace('post_excerpt', urlencode($this->post_excerpt), $gcal_url);
 					$gcal_url = str_replace('location_name', urlencode($this->output('#_LOCATION')), $gcal_url);
 					$gcal_url = str_replace('event_url', urlencode($this->get_permalink()), $gcal_url);
 					$gcal_url = str_replace('blog_name', urlencode(get_bloginfo()), $gcal_url);
