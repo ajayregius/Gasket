@@ -8,6 +8,9 @@
 
 <div class="em-events-search">
 	<?php 
+	//add our own scripts for this page
+	wp_enqueue_script('em-events-submission', plugins_url().'/events-manager/includes/js/submission-form.js', array('jquery'), 1);
+	
 	global $em_localized_js;
 	$s_default = get_option('dbem_search_form_text_label');	
 	$s = !empty($_REQUEST['search']) ? $_REQUEST['search']:$s_default;
@@ -36,10 +39,10 @@
 
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	
-			<input ID="AllCatsChkBox" name="CatAll" type="checkbox" OnClick="AllCatsOn(this.form)" value="ALL">Click for All categories.
+			<input id="AllCatsChkBox" name="CatAll" type="checkbox" value="ALL">Click for All categories.
 			<br>		
 			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
-			 <input id="categoryChkBox" name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
+			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
 			<?php endforeach; ?>		
 		<!-- END Multi Category Search -->
 		<?php endif; ?>
