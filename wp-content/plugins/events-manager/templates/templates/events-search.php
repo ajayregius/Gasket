@@ -32,14 +32,7 @@
 		optional
 		<br/>
 
-<script type="text/javascript" src="script.js">		
-function AllCatsOn(QryForm)
-{
-	alert("hi");
-	QryForm.category[1].checked=true;
-	document.getElementById('categoryChkBox').checked=false;
-}	
-</script>
+
 
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	

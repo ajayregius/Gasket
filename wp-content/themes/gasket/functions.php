@@ -12,4 +12,12 @@ function my_em_multi_category_search($conditions, $args){
 	 */
 	return $conditions;
 }
+
+	
+function AllCatsOn(){
+	alert("hi");
+	//$QryForm.category.checked == true;
+	//document.getElementById('categoryChkBox').checked=false;
+}	
+
 ?>
