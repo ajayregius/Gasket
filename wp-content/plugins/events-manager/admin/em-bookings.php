@@ -52,16 +52,27 @@ function em_bookings_dashboard(){
 	global $EM_Notices;
 	?>
 	<div class='wrap'>
+		<?php if( is_admin() ): ?>
 		<div id='icon-users' class='icon32'>
 			<br/>
 		</div>
   		<h2>
   			<?php _e('Event Bookings Dashboard', 'dbem'); ?>
   		</h2>
+  		<?php endif; ?>
   		<?php echo $EM_Notices; ?>
-  		<?php if( get_option('dbem_bookings_approval')): ?>
-		<h2><?php _e('Pending Bookings','dbem'); ?></h2>
-		<?php em_bookings_pending_table(); ?>
+		<?php if( is_admin() ): ?>
+		<div class="icon32" id="icon-bookings"><br></div>
+		<?php endif; ?>
+		<h2><?php _e('Recent Bookings','dbem'); ?></h2>	
+  		<?php
+		$EM_Bookings_Table = new EM_Bookings_Table();
+		$EM_Bookings_Table->status = get_option('dbem_bookings_approval') ? 'needs-attention':'confirmed';
+		$EM_Bookings_Table->output();
+  		?>
+  		<br class="clear" />
+		<?php if( is_admin() ): ?>
+		<div class="icon32" id="events"><br></div>
 		<?php endif; ?>
 		<h2><?php _e('Events With Bookings Enabled','dbem'); ?></h2>		
 		<?php em_bookings_events_table(); ?>
@@ -110,16 +121,13 @@ function em_bookings_event(){
 				<a class="row-title" href="<?php echo admin_url(); ?>post.php?action=edit&amp;post=<?php echo $EM_Event->get_location()->post_id ?>"><?php echo ($EM_Event->get_location()->location_name); ?></a> 
 			</p>
 		</div>
-  		<?php if( get_option('dbem_bookings_approval')): ?>
-		<h2><?php _e('Pending Bookings','dbem'); ?></h2>
-		<?php em_bookings_pending_table(); ?>
-		<?php endif; ?>
-		<h2><?php _e('Confirmed Bookings','dbem'); ?></h2>
-		<?php em_bookings_confirmed_table(); ?>
-		<h2><?php _e('Rejected Bookings','dbem'); ?></h2>
-		<?php em_bookings_rejected_table(); ?>
-		<h2><?php _e('Cancelled Bookings','dbem'); ?></h2>
-		<?php em_bookings_cancelled_table(); ?>
+		<div class="icon32" id="icon-bookings"><br></div>
+		<h2><?php _e('Bookings','dbem'); ?></h2>
+		<?php
+		$EM_Bookings_Table = new EM_Bookings_Table();
+		$EM_Bookings_Table->status = get_option('dbem_bookings_approval') ? 'needs-attention':'confirmed';
+		$EM_Bookings_Table->output();
+  		?>
 		<?php do_action('em_bookings_event_footer', $EM_Event); ?>
 	</div>
 	<?php
@@ -162,16 +170,13 @@ function em_bookings_ticket(){
 				<?php do_action('em_booking_admin_ticket_row', $EM_Ticket); ?>
 			</table>
 		</div>
-  		<?php if( get_option('dbem_bookings_approval')): ?>
-		<h2><?php _e('Pending Bookings','dbem'); ?></h2>
-		<?php em_bookings_pending_table(); ?>
-		<?php endif; ?>
-		<h2><?php _e('Confirmed Bookings','dbem'); ?></h2>
-		<?php em_bookings_confirmed_table(); ?>
-		<h2><?php _e('Rejected Bookings','dbem'); ?></h2>
-		<?php em_bookings_rejected_table(); ?>
-		<h2><?php _e('Cancelled Bookings','dbem'); ?></h2>
-		<?php em_bookings_cancelled_table(); ?>
+		<div class="icon32" id="icon-bookings"><br></div>
+		<h2><?php _e('Bookings','dbem'); ?></h2>
+		<?php
+		$EM_Bookings_Table = new EM_Bookings_Table();
+		$EM_Bookings_Table->status = get_option('dbem_bookings_approval') ? 'needs-attention':'confirmed';
+		$EM_Bookings_Table->output();
+  		?>
 		<?php do_action('em_bookings_ticket_footer', $EM_Ticket); ?>
 	</div>
 	<?php	
@@ -191,9 +196,7 @@ function em_bookings_single(){
 	}
 	?>
 	<div class='wrap'>
-		<div id='icon-users' class='icon32'>
-			<br/>
-		</div>
+		<div class="icon32" id="icon-bookings"><br></div>
   		<h2>
   			<?php _e('Edit Booking', 'dbem'); ?>
   		</h2>
@@ -303,7 +306,7 @@ function em_bookings_single(){
 								 	<input type='hidden' name='action' value='booking_save'/>
 								 	<input type='hidden' name='booking_id' value='<?php echo $EM_Booking->booking_id; ?>'/>
 								 	<input type='hidden' name='event_id' value='<?php echo $EM_Event->event_id; ?>'/>
-								 	<input type='hidden' name='_wpnonce' value='<?php echo wp_create_nonce('booking_save'); ?>'/>
+								 	<input type='hidden' name='_wpnonce' value='<?php echo wp_create_nonce('booking_save_'.$EM_Booking->booking_id); ?>'/>
 								 	<em><?php _e('<strong>Note:</strong> ticket availability not taken into account (i.e. you can overbook). Confirmation email is not resent automatically.','dbem'); ?></em>
 								</p>
 								<table cellspacing="0" cellpadding="0">
@@ -397,8 +400,14 @@ function em_bookings_person(){
 		</div>
 		<br style="clear:both;" />
 		<?php do_action('em_bookings_person_body_1'); ?>
-		<h3><?php _e('Past And Present Bookings','dbem'); ?></h3>
-		<?php em_bookings_person_table(); ?>
+		<div class="icon32" id="icon-bookings"><br></div>
+		<h2><?php _e('Past And Present Bookings','dbem'); ?></h2>
+		<?php
+		$EM_Bookings_Table = new EM_Bookings_Table();
+		$EM_Bookings_Table->status = 'all';
+		$EM_Bookings_Table->scope = 'all';
+		$EM_Bookings_Table->output();
+  		?>
 		<?php do_action('em_bookings_person_footer', $EM_Person); ?>
 	</div>
 	<?php

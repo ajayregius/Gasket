@@ -19,8 +19,9 @@ $required = '*';
 
 echo $EM_Notices;
 //Success notice
-if( !empty($_REQUEST['success']) && get_option('dbem_events_form_reshow') ){
-	return false;
+if( !empty($_REQUEST['success']) ){
+	$EM_Event = new $EM_Event(); //reset the event
+	if(!get_option('dbem_events_form_reshow')) return false;
 }
 ?>	
 <form enctype='multipart/form-data' id="event-form" method="post" action="">

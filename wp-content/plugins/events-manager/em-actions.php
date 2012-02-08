@@ -218,10 +218,15 @@ function em_init_actions() {
 		global $EM_Event, $EM_Booking, $EM_Person;
 		//Load the booking object, with saved booking if requested
 		$EM_Booking = ( !empty($_REQUEST['booking_id']) ) ? new EM_Booking($_REQUEST['booking_id']) : new EM_Booking();
-		//Load the event object, with saved event if requested
-		$EM_Event = $EM_Booking->get_event();
+		if( !empty($EM_Booking->event_id) ){
+			//Load the event object, with saved event if requested
+			$EM_Event = $EM_Booking->get_event();
+		}elseif( !empty($_REQUEST['event_id']) ){
+			$EM_Event = new EM_Event($_REQUEST['event_id']);
+		}
 		$allowed_actions = array('bookings_approve'=>'approve','bookings_reject'=>'reject','bookings_unapprove'=>'unapprove', 'bookings_delete'=>'delete');
 		$result = false;
+		$feedback = '';
 		if ( $_REQUEST['action'] == 'booking_add') {
 			//ADD/EDIT Booking
 			em_verify_nonce('booking_add');
@@ -303,14 +308,15 @@ function em_init_actions() {
 							$EM_Notices->add_error( get_option('dbem_booking_feedback_log_in') );
 						}
 					}
-					if( $registration && $EM_Event->get_bookings()->add($EM_Booking) ){
+					$EM_Bookings = $EM_Event->get_bookings();
+					if( $registration && $EM_Bookings->add($EM_Booking) ){
 						$result = true;
-						$EM_Notices->add_confirm( $EM_Event->get_bookings()->feedback_message );		
-						$feedback = $EM_Event->get_bookings()->feedback_message;	
+						$EM_Notices->add_confirm( $EM_Bookings->feedback_message );		
+						$feedback = $EM_Bookings->feedback_message;
 					}else{
 						$result = false;
-						$EM_Notices->add_error( $EM_Event->get_bookings()->get_errors() );			
-						$feedback = $EM_Event->get_bookings()->feedback_message;				
+						$EM_Notices->add_error( $EM_Bookings->get_errors() );			
+						$feedback = $EM_Bookings->feedback_message;				
 					}
 				}else{
 					$result = false;
@@ -400,13 +406,15 @@ function em_init_actions() {
 				die();
 			}
 		}elseif( $_REQUEST['action'] == 'booking_save' ){
-			em_verify_nonce('booking_save');
+			em_verify_nonce('booking_save_'.$EM_Booking->booking_id);
 			do_action('em_booking_save', $EM_Event, $EM_Booking);
 			if( $EM_Booking->can_manage('manage_bookings','manage_others_bookings') ){
 				if ($EM_Booking->get_post(true) && $EM_Booking->save(false) ){
 					$result = true;
-					$EM_Notices->add_confirm( $EM_Booking->feedback_message );		
-					$feedback = $EM_Booking->feedback_message;	
+					$EM_Notices->add_confirm( $EM_Booking->feedback_message, true );
+					$redirect = !empty($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : wp_get_referer();
+					wp_redirect( $redirect );
+					exit();
 				}else{
 					$result = false;
 					$EM_Notices->add_error( $EM_Booking->get_errors() );			
@@ -416,18 +424,18 @@ function em_init_actions() {
 		}
 		if( $result && defined('DOING_AJAX') ){
 			$return = array('result'=>true, 'message'=>$feedback);
-			echo EM_Object::json_encode($return);
+			echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Booking));
 			die();
 		}elseif( !$result && defined('DOING_AJAX') ){
 			$return = array('result'=>false, 'message'=>$feedback, 'errors'=>$EM_Notices->get_errors());
-			echo EM_Object::json_encode($return);
+			echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Booking));
 			die();
 		}
 	}elseif( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_add' && !is_user_logged_in() && !get_option('dbem_bookings_anonymous')){
 		$EM_Notices->add_error( get_option('dbem_booking_feedback_log_in') );
 		if( !$result && defined('DOING_AJAX') ){
 			$return = array('result'=>false, 'message'=>$EM_Booking->feedback_message, 'errors'=>$EM_Notices->get_errors());
-			echo EM_Object::json_encode($return);
+			echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Booking));
 		}
 		die();
 	}
@@ -439,7 +447,8 @@ function em_init_actions() {
 			$conds = array();
 			if( !empty($_REQUEST['country']) ){
 				$conds[] = $wpdb->prepare("(location_country = '%s' OR location_country IS NULL )", $_REQUEST['country']);
-			}elseif( !empty($_REQUEST['region']) ){
+			}
+			if( !empty($_REQUEST['region']) ){
 				$conds[] = $wpdb->prepare("( location_region = '%s' OR location_region IS NULL )", $_REQUEST['region']);
 			}
 			$cond = (count($conds) > 0) ? "AND ".implode(' AND ', $conds):'';
@@ -466,9 +475,11 @@ function em_init_actions() {
 			$conds = array();
 			if( !empty($_REQUEST['country']) ){
 				$conds[] = $wpdb->prepare("(location_country = '%s' OR location_country IS NULL )", $_REQUEST['country']);
-			}elseif( !empty($_REQUEST['region']) ){
+			}
+			if( !empty($_REQUEST['region']) ){
 				$conds[] = $wpdb->prepare("( location_region = '%s' OR location_region IS NULL )", $_REQUEST['region']);
-			}elseif( !empty($_REQUEST['state']) ){
+			}
+			if( !empty($_REQUEST['state']) ){
 				$conds[] = $wpdb->prepare("(location_state = '%s' OR location_state IS NULL )", $_REQUEST['state']);
 			}
 			$cond = (count($conds) > 0) ? "AND ".implode(' AND ', $conds):'';
@@ -540,8 +551,37 @@ function em_init_actions() {
 					break;
 			}
 		}
-	}	
+	}
+	//Export CSV - WIP
+	if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'export_bookings_csv' && wp_verify_nonce($_REQUEST['_wpnonce'], 'export_bookings_csv')){
+		//generate bookings export according to search request
+		$EM_Bookings_Table = new EM_Bookings_Table();
+		header("Content-Type: application/octet-stream");
+		header("Content-Disposition: Attachment; filename=".sanitize_title(get_bloginfo())."-bookings-export.csv");
+		echo sprintf(__('Exported booking on %s','dbem'), date_i18n('D d M Y h:i', current_time('timestamp'))) .  "\n";
+		echo '"'. implode('","', $EM_Bookings_Table->get_headers()). '"' .  "\n";
+		//Rows
+		foreach( $EM_Bookings_Table->get_bookings() as $EM_Booking ) {
+			//Display all values
+			$row_output = '';
+			$row = $EM_Bookings_Table->get_rows_csv($EM_Booking);
+			foreach( $row as $value){
+				$value = str_replace('"', '""', $value);
+				$value = str_replace("=", "", $value);
+				$row_output .= '"' .  preg_replace("/\n\r|\r\n|\n|\r/", ".     ", $value) . '",';
+			}
+			echo $row_output."\n";
+		}
+		exit();
+	}
 }  
 add_action('init','em_init_actions',11);
+
+function em_ajax_bookings_table(){
+	$EM_Bookings_Table = new EM_Bookings_Table();
+	$EM_Bookings_Table->output_content();
+	exit();
+}
+add_action('wp_ajax_em_bookings_table','em_ajax_bookings_table');
 
 ?>
