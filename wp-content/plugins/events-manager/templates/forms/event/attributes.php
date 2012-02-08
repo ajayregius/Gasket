@@ -80,7 +80,7 @@ $has_depreciated = false;
 		<?php endif; ?>
 	<?php else : ?>
 		<p>
-		<?php _e('In order to use attributes, you must define some in your templates, otherwise they\'ll never show. Go to Events > Settings to add attribute placeholders.', 'dbem'); ?>
+		<?php _e('In order to use attributes, you must define some in your templates, otherwise they\'ll never show. Go to Events > Settings > General to add attribute placeholders.', 'dbem'); ?>
 		</p> 
 		<script>
 			jQuery(document).ready(function($){ $('#event_attributes').addClass('closed'); });

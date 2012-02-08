@@ -21,7 +21,7 @@ function em_docs_init($force_init = false){
 					'post_id' => array( 'desc' => sprintf('Supply a single id or comma-seperated ids (e.g. "1,2,3") to limit the search to %s with the %s.','events', 'post_id(s)')),
 					'private' => array( 'desc' => sprintf('Display private %s within your list?','events'), 'args' => '1 = yes, 0 = no', 'default' => 'If user can view private events, 1, otherwise 0.'),
 					'private_only' => array( 'desc' =>sprintf('Display only private %s ?','events'), 'args' => '1 = yes, 0 = no', 'default' => '0'),
-					'recurrence' => array( 'desc'=> 'If set to 1, will show only events that are recurring (i.e. events that are repeated over different dates).', 'default'=>0),
+					'recurrence' => array( 'desc'=> 'If set to the event id of the recurring event, this will show only events this event recurrences.', 'default'=>0),
 					'recurring' => array( 'desc'=> 'If set to 1, will only show recurring event templates. Only useful if you know what you\'re doing, use recurrence if you want events that are recurrences.', 'default'=>0),
 					'search' => array( 'desc'=> 'Do a search for this string within event name, details and location address.' ),
 					'status' => array( 'desc' => sprintf('Limit search to %s with a spefic status (1 is active, 0 is pending approval)','events'), 'default'=>1),
@@ -196,6 +196,14 @@ function em_docs_init($force_init = false){
 							'#_LOCATIONFULLBR' => array( 'desc' => 'Shows a line-break (br tag) seperated location information, ommitting blanks (format of address, town, state, postcode, region' ),
 						)
 					),
+					'Custom Attributes' => array(
+						'desc' => 'Events Manager allows you to create dynamic attributes to your locations, which act as extra information fields for your locations (e.g. "Dress Code"). For more information see <a href="http://wp-events-plugin.com/documentation/categories-and-attributes/">our online documentation</a> for more info on attributes.',
+						'placeholders' => array( 
+							'#_LATT{key}' => array('desc'=> 'This key will appear as an option when adding attributes to your location.'),
+							'#_LATT{key}{alternative text}' => array('desc'=> 'This key will appear as an option when adding attributes to your location. The text in the second braces will appear if the attribute is not defined or left blank for that location.'),
+							'#_LATT{key}{option 1|option 2|option 3|etc.}' => array('desc'=> 'This key will appear as an option when adding attributes to your location. The second braces are optional and will use a select box with these values as input. If no valid value is defined, the first option is used.'),
+						)
+					),
 					'Links' => array(
 						'placeholders' => array(
 							'#_LOCATIONURL' => array( 'desc' => 'Simply prints the location URL. You can use this placeholder to build your own customised links.' ),
@@ -255,7 +263,13 @@ function em_docs_init($force_init = false){
 						'placeholders' => array(
 							'#_BOOKINGLISTURL' => array( 'desc' => 'URL to page showing that users booked events.' )
 						)
-					)
+					),
+					'Gateway-Specific Information' => array(
+						'desc' => '',
+						'placeholders' => array(
+							'#_BOOKINGTXNID' => array( 'desc' => '<em>Online Payments Only</em> - Prints the transaction ID of this booking if available.' )
+						)
+					),
 				),
 			),
 			//TODO add capabilites explanations

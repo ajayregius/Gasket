@@ -9,12 +9,14 @@ function em_get_event($id = false, $search_by = 'event_id') {
 	global $EM_Event;
 	//check if it's not already global so we don't instantiate again
 	if( is_object($EM_Event) && get_class($EM_Event) == 'EM_Event' ){
-		if( $search_by == 'event_id' && $EM_Event->event_id == $id ){
+		if( is_object($id) && $EM_Event->post_id == $id->ID ){
 			return $EM_Event;
-		}elseif( $search_by == 'post_id' && $EM_Event->post_id == $id ){
-			return $EM_Event;
-		}elseif( is_object($id) && $EM_Event->post_id == $id->ID ){
-			return $EM_Event;
+		}elseif( !is_object($id) ){
+			if( $search_by == 'event_id' && $EM_Event->event_id == $id ){
+				return $EM_Event;
+			}elseif( $search_by == 'post_id' && $EM_Event->post_id == $id ){
+				return $EM_Event;
+			}
 		}
 	}
 	if( is_object($id) && get_class($id) == 'EM_Event' ){
@@ -37,6 +39,7 @@ function em_get_event($id = false, $search_by = 'event_id') {
 class EM_Event extends EM_Object{
 	/* Field Names */
 	var $event_id;
+	var $post_id;
 	var $event_slug;
 	var $event_owner;
 	var $event_name;
@@ -332,7 +335,7 @@ class EM_Event extends EM_Object{
 		$this->event_start_date = ( !empty($_POST['event_start_date']) ) ? $_POST['event_start_date'] : '';
 		$this->event_end_date = ( !empty($_POST['event_end_date']) ) ? $_POST['event_end_date'] : $this->event_start_date;
 		//check if this is recurring or not
-		if( $_REQUEST['recurring'] ){
+		if( !empty($_REQUEST['recurring']) ){
 			$this->recurrence = 1;
 			$this->post_type = 'event-recurring';
 		}
@@ -427,8 +430,9 @@ class EM_Event extends EM_Object{
 			$validate_post = false; 
 			$this->add_error( __('Event name').__(" is required.", "dbem") );
 		}
+		$validate_image = $this->image_validate();
 		$validate_meta = $this->validate_meta();
-		return apply_filters('em_event_validate', $validate_post && $validate_meta, $this );		
+		return apply_filters('em_event_validate', $validate_post && $validate_image && $validate_meta, $this );		
 	}
 	function validate_meta(){
 		$missing_fields = Array ();
@@ -642,7 +646,9 @@ class EM_Event extends EM_Object{
 			$fields = implode(',',$fields);
 			$sql = "INSERT INTO {$wpdb->posts} ($fields) SELECT $fields FROM {$wpdb->posts} WHERE ID={$this->post_id}";
 			$result = $wpdb->query($sql);
-			$EM_Event->post_id = $EM_Event->ID = $wpdb->insert_id;
+			//TODO make a post_id refresher function to change all post ids in objects this contains
+			$EM_Event->post_id = $EM_Event->get_categories()->post_id = $EM_Event->ID = $wpdb->insert_id;
+			$EM_Event->get_categories()->save();
 			//Duplicate Event Table index and tickets
 			if( $EM_Event->save_meta() ){
 				//duplicate tickets
@@ -989,7 +995,7 @@ class EM_Event extends EM_Object{
 	 	$event_string = $format;
 		//Time place holder that doesn't show if empty.
 		//TODO add filter here too
-		preg_match_all('/#@?_\{[A-Za-z0-9 -\/,\.\\\]+\}/', $format, $results);
+		preg_match_all('/#@?_\{[^}]+\}/', $format, $results);
 		foreach($results[0] as $result) {
 			if(substr($result, 0, 3 ) == "#@_"){
 				$date = 'end_date';
@@ -1059,6 +1065,18 @@ class EM_Event extends EM_Object{
 				}elseif ($condition == 'not_logged_in'){
 					//not logged in
 					$show_condition = !is_user_logged_in();
+				}elseif ($condition == 'has_spaces'){
+					//is it an all day event
+					$show_condition = $this->rsvp && $this->get_bookings()->get_available_spaces() > 0;
+				}elseif ($condition == 'fully_booked'){
+					//is it an all day event
+					$show_condition = $this->rsvp && $this->get_bookings()->get_available_spaces() <= 0;
+				}elseif ($condition == 'is_long'){
+					//is it an all day event
+					$show_condition = $this->event_start_date != $this->event_end_date;
+				}elseif ($condition == 'not_long'){
+					//is it an all day event
+					$show_condition = $this->event_start_date == $this->event_end_date;
 				}
 				$show_condition = apply_filters('em_event_output_show_condition', $show_condition, $condition, $conditionals[0][$key], $this);
 				if($show_condition){
@@ -1138,9 +1156,9 @@ class EM_Event extends EM_Object{
 					if( !$this->event_all_day ){
 						$time_format = ( get_option('dbem_time_format') ) ? get_option('dbem_time_format'):get_option('time_format');
 						if($this->event_start_time != $this->event_end_time ){
-							$replace = date($time_format, $this->start). get_option('dbem_times_seperator') . date($time_format, $this->end);
+							$replace = date_i18n($time_format, $this->start). get_option('dbem_times_seperator') . date_i18n($time_format, $this->end);
 						}else{
-							$replace = date($time_format, $this->start);
+							$replace = date_i18n($time_format, $this->start);
 						}
 					}else{
 						$replace = get_option('dbem_event_all_day_message');
@@ -1150,9 +1168,9 @@ class EM_Event extends EM_Object{
 					//get format of time to show
 					$date_format = ( get_option('dbem_date_format') ) ? get_option('dbem_date_format'):get_option('date_format');
 					if( $this->event_start_date != $this->event_end_date){
-						$replace = date($date_format, $this->start). get_option('dbem_dates_seperator') . date($date_format, $this->end);
+						$replace = date_i18n($date_format, $this->start). get_option('dbem_dates_seperator') . date_i18n($date_format, $this->end);
 					}else{
-						$replace = date($date_format, $this->start);
+						$replace = date_i18n($date_format, $this->start);
 					}
 					break;
 				//Links
@@ -1816,7 +1834,7 @@ function em_event_output_placeholder($result,$event,$placeholder,$target='html')
 		$result = apply_filters('dbem_notes_excerpt', $result);
 	}elseif( $placeholder == '#_CONTACTEMAIL' && $target == 'html' ){
 		$result = em_ascii_encode($event->get_contact()->user_email);
-	}elseif( $placeholder == "#_NOTES" || $placeholder == "#_EXCERPT" || $placeholder == "#_LOCATIONEXCERPT" ){
+	}elseif( $placeholder == "#_EVENTNOTES" || $placeholder == "#_NOTES" || $placeholder == "#_EXCERPT" || $placeholder == "#_LOCATIONEXCERPT" ){
 		if($target == 'html'){
 			$result = apply_filters('dbem_notes', $result);
 		}elseif($target == 'map'){
@@ -1839,4 +1857,25 @@ function em_event_output_placeholder($result,$event,$placeholder,$target='html')
 	return $result;
 }
 add_filter('em_event_output_placeholder','em_event_output_placeholder',1,4);
+// FILTERS
+// filters for general events field (corresponding to those of  "the _title")
+add_filter('dbem_general', 'wptexturize');
+add_filter('dbem_general', 'convert_chars');
+add_filter('dbem_general', 'trim');
+// filters for the notes field  (corresponding to those of  "the _content")
+add_filter('dbem_notes', 'wptexturize');
+add_filter('dbem_notes', 'convert_smilies');
+add_filter('dbem_notes', 'convert_chars');
+add_filter('dbem_notes', 'wpautop');
+add_filter('dbem_notes', 'prepend_attachment');
+// RSS general filters
+add_filter('dbem_general_rss', 'strip_tags');
+add_filter('dbem_general_rss', 'ent2ncr', 8);
+add_filter('dbem_general_rss', 'esc_html');
+// RSS content filter
+add_filter('dbem_notes_rss', 'convert_chars', 8);
+add_filter('dbem_notes_rss', 'ent2ncr', 8);
+// Notes map filters
+add_filter('dbem_notes_map', 'convert_chars', 8);
+add_filter('dbem_notes_map', 'js_escape');
 ?>
