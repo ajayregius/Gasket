@@ -72,7 +72,8 @@ body {
 	padding: 0 2em;
 }
 #page {
-	margin: 2em auto;
+	/*margin: 2em auto;*/
+	margin: 0em auto;
 	max-width: 1000px;
 }
 #branding hgroup {
@@ -94,6 +95,7 @@ body {
 	float: right;
 	margin-right: 7.6%;
 	width: 18.8%;
+	margin-top:10px;
 }
 
 /* Singular */
@@ -501,7 +503,8 @@ a:hover {
 ----------------------------------------------- */
 
 #branding {
-	border-top: 2px solid #bbb;
+	/*border-top: 2px solid #bbb;*/
+	border-top: 0px solid #bbb;
 	padding-bottom: 10px;
 	position: relative;
 	z-index: 9999;
@@ -528,7 +531,8 @@ a:hover {
 	margin: 0 270px 3.65625em 0;
 }
 #branding img {
-	height: auto;
+	/*height: auto;*/
+	height: 215px;
 	margin-bottom: -7px;
 	width: 100%;
 }
@@ -681,7 +685,7 @@ a:hover {
 ----------------------------------------------- */
 
 #main {
-	clear: both;
+	/*clear: both;*/
 	padding: 1.625em 0 0;
 }
 .page-title {
@@ -725,8 +729,8 @@ a:hover {
 	font-size: 26px;
 	font-weight: bold;
 	line-height: 1.5em;
-	padding-bottom: .3em;
-	padding-top: 15px;
+	/*padding-bottom: .3em;
+	padding-top: 15px;*/
 }
 .entry-title,
 .entry-title a {
@@ -752,7 +756,7 @@ a:hover {
 }
 .entry-content,
 .entry-summary {
-	padding: 1.625em 0 0;
+	/*padding: 1.625em 0 0;*/
 }
 .entry-content h1,
 .entry-content h2,

@@ -6,7 +6,7 @@
  */
 ?>
 
-<div class="em-events-search">
+<div class="em-events-search" style="float:left;">
 	<?php 
 	//add our own scripts for this page
 	wp_enqueue_script('em-events-submission', plugins_url().'/events-manager/includes/js/submission-form.js', array('jquery'), 1);
@@ -24,29 +24,23 @@
 	//get the events page to display search results
 	?>
 	<form action="<?php echo EM_URI; ?>" method="post" class="em-events-search-form">
-		<?php do_action('em_template_events_search_form_header'); ?>
-		General search word
-		<?php if( !empty($search_text) || (get_option('dbem_search_form_text') && empty($search_text)) ): ?>
-		<!-- START General Search -->
-		<?php /* This general search will find matches within event_name, event_notes, and the location_name, address, town, state and country. */ ?>
-		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo $s; ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'" />
-		<!-- END General Search -->
-		<?php endif; ?>		
-		optional
-		<br/>
+	
 
 
-
+<div id="multicheck" style="width:630px;float:left;height:auto">
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	
-			<input id="AllCatsChkBox" name="CatAll" type="checkbox" value="ALL">Click for All categories.
-			<br>		
+			<div id="allcheck"  style="margin-top:10px;"><input id="AllCatsChkBox" name="CatAll" type="checkbox" value="ALL">Click for All categories.</div>
+			<div id="individualcheck" >	
 			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
-			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?>
+			 <div id="checks" style="width:150px;float:left;">
+			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?></div>
 			<?php endforeach; ?>		
 		<!-- END Multi Category Search -->
 		<?php endif; ?>
-		<br/>
+		</div>
+		</div>
+		<div id="categories" style="margin-left:100px;">
 		<?php if( !empty($search_countries) || (get_option('dbem_search_form_countries') && empty($search_countries)) ): ?>
 		<!-- START Country Search -->
 		<select name="country" class="em-events-search-country">
@@ -84,28 +78,6 @@
 		<!-- END Region Search -->	
 		<?php endif; ?>
 		
-		<?php if( !empty($search_states) || (get_option('dbem_search_form_states') && empty($search_states)) ): ?>
-		<!-- START State/County Search -->
-		Choose state
-		<select name="state" class="em-events-search-state">
-			<option value=''><?php echo get_option('dbem_search_form_states_label'); ?></option>
-			<?php 
-			if( !empty($country) ){
-				//get the counties from locations table
-				global $wpdb;
-				$cond = !empty($_REQUEST['region']) ? $wpdb->prepare(" AND location_region=%s ", $_REQUEST['region']):'';
-				$em_states = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT location_state FROM ".EM_LOCATIONS_TABLE." WHERE location_state IS NOT NULL AND location_state != '' AND location_country=%s $cond ORDER BY location_state", $country), ARRAY_N);
-				foreach($em_states as $state){
-					?>
-					 <option <?php echo (!empty($_REQUEST['state']) && $_REQUEST['state'] == $state[0]) ? 'selected="selected"':''; ?>><?php echo $state[0]; ?></option>
-					<?php 
-				}
-			}
-			?>
-		</select>
-		<!-- END State/County Search -->
-		or distance from Postcode
-		<?php endif; ?>
 		
 		<?php if( !empty($search_towns) || (get_option('dbem_search_form_towns') && empty($search_towns)) ): ?>
 		<!-- START City Search -->
@@ -128,25 +100,63 @@
 		</select>
 		<!-- END City Search -->
 		<?php endif; ?>
-
+		</div>
+		<div id="state" style="margin-top:10px;float:left;">
+		<?php if( !empty($search_states) || (get_option('dbem_search_form_states') && empty($search_states)) ): ?>
+		<!-- START State/County Search -->
+		<!--Choose state-->
+		<select name="state" class="em-events-search-state">
+			<option value=''><?php echo get_option('dbem_search_form_states_label'); ?></option>
+			<?php 
+			if( !empty($country) ){
+				//get the counties from locations table
+				global $wpdb;
+				$cond = !empty($_REQUEST['region']) ? $wpdb->prepare(" AND location_region=%s ", $_REQUEST['region']):'';
+				$em_states = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT location_state FROM ".EM_LOCATIONS_TABLE." WHERE location_state IS NOT NULL AND location_state != '' AND location_country=%s $cond ORDER BY location_state", $country), ARRAY_N);
+				foreach($em_states as $state){
+					?>
+					 <option <?php echo (!empty($_REQUEST['state']) && $_REQUEST['state'] == $state[0]) ? 'selected="selected"':''; ?>><?php echo $state[0]; ?></option>
+					<?php 
+				}
+			}
+			?>
+		</select>
+		<!-- END State/County Search -->
+		<!--or distance from Postcode-->
+		<?php endif; ?>
+		</div>
 		<?php if( !empty($search_dates) || (get_option('dbem_search_form_dates') && empty($search_dates)) ): ?>
 		<br/>
+		
+		<div id="dates" style="float:left;margin-top:10px;margin-left:100px;">
 		<!-- START Date Search -->
 		<span class="em-events-search-dates">
 			<?php _e('Dates from','dbem'); ?>:
-			<input type="text" id="em-date-start-loc" />
+			<input type="text" id="em-date-start-loc" size="5"/>
 			<input type="hidden" id="em-date-start" name="scope[0]" value="<?php if( !empty($_REQUEST['scope'][0]) ) echo $_REQUEST['scope'][0]; ?>" />
 			<?php _e('to','dbem'); ?>
-			<input type="text" id="em-date-end-loc" />
+			<input type="text" id="em-date-end-loc" size="5"/>
 			<input type="hidden" id="em-date-end" name="scope[1]" value="<?php if( !empty($_REQUEST['scope'][1]) ) echo $_REQUEST['scope'][1]; ?>" />
 		</span>
 		<!-- END Date Search -->
 		<?php endif; ?>
-
-		
+		</div>
+		<div id="gen_search" style=float:left;width:390px;margin-top:10px;">
+		<?php do_action('em_template_events_search_form_header'); ?>
+		General search word
+		<?php if( !empty($search_text) || (get_option('dbem_search_form_text') && empty($search_text)) ): ?>
+		<!-- START General Search -->
+		<?php /* This general search will find matches within event_name, event_notes, and the location_name, address, town, state and country. */ ?>
+		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo $s; ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'"  />
+		<!-- END General Search -->
+		<?php endif; ?>		
+		optional
+		</div>
+		<div id="sub" style="float:left;margin-top:10px;margin-left:10px;">
 		<?php do_action('em_template_events_search_form_ddm'); //depreciated, don't hook, use the one below ?>
 		<?php do_action('em_template_events_search_form_footer'); ?>
 		<input type="hidden" name="action" value="search_events" />
-		<input type="submit" value="<?php echo $s_default; ?>" class="em-events-search-submit" />		
+		<input type="submit" value="<?php echo $s_default; ?>" class="em-events-search-submit" />	
+		</div>	
 	</form>	
 </div>
