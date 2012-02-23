@@ -25,7 +25,115 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+session_start();
+if(true){
 
+//echo"<pre>";print_r($_REQUEST);//exit;
+//echo"<pre>";print_r($_REQUEST);//exit;
+//echo"<pre>";print_r($_POST);//exit;
+ //echo $_REQUEST['scope'][1];exit;
+ //error_reporting(0);
+ $cookie_content = "";
+if(isset($_REQUEST['action']) && $_REQUEST['action']=='search_events' )
+{
+    //echo"<pre>";print_r($_SESSION);exit;
+	if(isset($_REQUEST['CatAll']) && $_REQUEST['CatAll']=='ALL' )
+	{
+		 setcookie("CatAll", ($_REQUEST['CatAll']),time()+604800);
+		setcookie("Category", ($_REQUEST['CatAll']),time()-604800);
+	}
+	else
+	{
+		setcookie("CatAll", 'NO',time()+604800);
+		if(isset($_REQUEST['category']))
+		{ 
+			foreach($_REQUEST['category'] as $key => $value)
+			{
+			$cookie_content .= $value . ",";
+			}
+	 
+			//trim the last | from the end
+			$cookie_content = substr($cookie_content, 0, -1);
+	
+			//setting the cookie
+			setcookie("Category", $cookie_content, time()+604800);  
+	   
+		
+			//turn cookie data back into array
+			//echo"<pre>";print_r($_COOKIE);
+			$_SESSION['my_cookie_arr'] = explode(",", $_COOKIE['Category']);
+			//echo"<pre>";print_r($_SESSION);exit;
+			//print_r($my_cookie_arr);exit;
+		
+		}
+	
+	}
+	
+}
+else
+{
+
+		if(isset($_COOKIE['CatAll']) && $_COOKIE['CatAll']=='ALL' )
+	{
+		setcookie("CatAll", ('ALL'),time()+604800);
+		setcookie("Category", ('NO'),time()-604800);
+		unset($_SESSION['my_cookie_arr']);
+	}
+	else
+	{
+		setcookie("CatAll", ('NO'),time()+604800);
+		if(isset($_COOKIE['category']))
+		{ 
+			/*foreach($_REQUEST['category'] as $key => $value)
+			{
+			$cookie_content .= $value . ",";
+			}
+	 */
+			//trim the last | from the end
+			//$cookie_content = substr($cookie_content, 0, -1);
+	
+			//setting the cookie
+			//setcookie("Category", $cookie_content, time()+604800);  
+	   
+		
+			//turn cookie data back into array
+			//echo"<pre>";print_r($_COOKIE);
+			unset($_SESSION['my_cookie_arr']);
+			$_SESSION['my_cookie_arr'] = explode(",", $_COOKIE['Category']);
+			//echo"<pre>";print_r($_SESSION);exit;
+			//print_r($my_cookie_arr);exit;
+		
+		}
+	
+	}
+
+
+
+		if($_COOKIE['Category']!='')
+		{
+			$_SESSION['my_cookie_arr'] = explode(",", $_COOKIE['Category']);
+		}
+}
+		/*else
+		{
+		setcookie("Category", $cookie_content, time()-604800);
+		//echo"<pre>";print_r($_SESSION);exit;
+		}*/
+    
+
+if(isset($_REQUEST['action']) && $_REQUEST['action']=='search_events' ){
+setcookie("em_search", ($_POST['em_search']),time()+604800);
+setcookie("scope_0", ($_POST['scope']['0']),time()+604800);
+setcookie("scope_1", ($_POST['scope']['1']),time()+604800);
+setcookie("state",  isset($_POST['state']) && $_POST['state']!='' ?$_POST['state']:($_POST['state']==''?'BLANK':''),time()+604800);
+//setcookie("state", ($_POST['state']),time()+604800);
+}
+//echo base64_decode($_COOKIE['state']);//exit;
+  //echo base64_decode($_COOKIE['scope_1']);//exit;
+//echo"<pre>";print_r($_COOKIE);//exit;
+// echo"<pre>";print_r($_REQUEST);//exit;
+//$_REQUEST['category'][0]=11;
+}
 
 // Setting constants
 define('EM_VERSION', 5.051); //self expanatory

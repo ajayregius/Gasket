@@ -8,12 +8,76 @@
  * $args - the args passed onto EM_Events::output()
  * 
  */
+ //setcookie("Category", "1", time()+604800);
+// echo"<pre>";print_r($_COOKIE);//exit;
+ //$_REQUEST['category'][0]=11;
 if( get_option('dbem_events_page_search') && !defined('DOING_AJAX') ){
 	em_locate_template('templates/events-search.php',true);
 }
 
 //TODO fine tune ajax searches - we have some pagination issues
 if( get_option('dbem_events_page_ajax', false) ) echo "<div class='em-events-search-ajax'>";
+//echo "<pre>";print_r($args) ;//exit;
+//$args['category']='11';
+
+if(isset($_REQUEST['action']))
+{
+//echo "done ";exit;
+	if($_REQUEST['action'] == 'search_events')
+	{
+	
+	
+	//echo "<pre>";print_r($args) ;//exit;
+	
+	
+	
+	}
+
+}
+else
+{
+//echo "<pre>";print_r($args) ;//exit;
+//echo "not done ";//exit;
+
+			if(isset($_COOKIE['em_search']) && $_COOKIE['em_search']!='')
+			{
+			$args['search']=$_COOKIE['em_search'];
+			}
+			if(isset($_COOKIE['state']) && $_COOKIE['state']!='')
+			{
+			$args['state']=$_COOKIE['state'];
+			}
+			if(isset($_COOKIE['CatAll']) && $_COOKIE['CatAll']=='ALL')
+			{
+			$args['CatAll']=$_COOKIE['CatAll'];
+			}
+			else
+			{
+				if(isset($_COOKIE['Category']) && $_COOKIE['Category']!='')
+				{
+				$args['category']=$_COOKIE['Category'];
+				}
+			}
+			if(isset($_COOKIE['scope_0']) && $_COOKIE['scope_0']!='' && isset($_COOKIE['scope_1']) && $_COOKIE['scope_1']!='')
+			{
+			$args['scope']=$_COOKIE['scope_0'].','.$_COOKIE['scope_1'];
+			}
+			if(isset($_COOKIE['state']) )
+				{
+				$args['state']=$_COOKIE['state'];
+				}
+				if(isset($_COOKIE['state']) && $_COOKIE['state']=='BLANK')
+				{
+				$args['state']='';
+				}
+//$args['search']="dipendu";
+//$args['category']='11';
+
+}
+
+
+//echo "<pre>";print_r($args) ;
+
 $events_count = EM_Events::count( apply_filters('em_content_events_args', $args) );
 $args['limit'] = get_option('dbem_events_default_limit');
 $args['page'] = (!empty($_REQUEST['page']) && is_numeric($_REQUEST['page']) )? $_REQUEST['page'] : 1;

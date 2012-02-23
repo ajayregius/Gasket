@@ -4,8 +4,48 @@
  * To ensure compatability, it is recommended you maintain class, id and form name attributes, unless you now what you're doing. 
  * You also must keep the _wpnonce hidden field in this form too.
  */
+// echo"<pre>";print_r($_COOKIE);//exit;
+ //echo"<pre>";print_r($_REQUEST);exit;
+ 
+/*setcookie("em_search", base64_encode($_REQUEST['em_search']),time()+604800);
+setcookie("scope_0", base64_encode($_REQUEST['scope_0']),time()+604800);
+setcookie("scope_1", base64_encode($_REQUEST['scope_1']),time()+604800);
+setcookie("state", base64_encode($_REQUEST['state']),time()+604800);*/
+	// echo"<pre>";print_r($_COOKIE);	
 ?>
+<script type="text/javascript">
 
+$(document).ready(function() {
+  // Handler for .ready() called.
+  
+  
+  /*$("#reset").click(function() {
+  alert('reset');//$("#target").click();
+});*/
+  
+  /*function reset1(ele) {
+
+alert('here');
+    $(ele).find(':input').each(function() {
+        switch(this.type) {
+            case 'password':
+            case 'select-multiple':
+            case 'select-one':
+            case 'text':
+            case 'textarea':
+                $(this).val('');
+                break;
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+        }
+    });
+
+}*/
+});
+
+
+</script>
 <div class="em-events-search" style="float:left;">
 	<?php 
 	//add our own scripts for this page
@@ -30,11 +70,51 @@
 <div id="multicheck" style="width:630px;float:left;height:auto">
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
 		<!-- START multi select Category Search -->	
-			<div id="allcheck"  style="margin-top:10px;"><input id="AllCatsChkBox" name="CatAll" type="checkbox" value="ALL">Click for All categories.</div>
+			<div id="allcheck"  style="margin-top:10px;"><input id="AllCatsChkBox" name="CatAll" type="checkbox" value="ALL" 
+			<?php if (isset($_REQUEST['CatAll']))
+			{
+				if (isset($_REQUEST['CatAll']) &&  $_REQUEST['CatAll']=='ALL') 
+				{
+				echo 'checked="checked"';
+				}
+			} 
+			else 
+			{ 
+			if (isset($_COOKIE['CatAll']) &&  $_COOKIE['CatAll']=='ALL' && $_REQUEST['action']!='search_events') 
+			echo 'checked="checked"'; 
+			} ?> >Click for All categories.</div>
 			<div id="individualcheck" >	
 			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
 			 <div id="checks" style="width:150px;float:left;">
-			 <input name="category[]" type="checkbox" class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php echo (!empty($_REQUEST['category']) && $_REQUEST['category'] == $EM_Category->id) ? 'selected="selected"':''; ?>><?php echo $EM_Category->name; ?></div>
+			 <input name="category[]" type="checkbox"  class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php 
+
+if(isset($_REQUEST['action']) && $_REQUEST['action']=='search_events')
+{
+ if (isset($_REQUEST['CatAll']) &&  $_REQUEST['CatAll']=='ALL') 
+ {
+ echo 'checked="checked"';
+ }
+ else
+ {
+ if (isset($_REQUEST['category']) && in_array($EM_Category->id, $_REQUEST['category'])) echo 'checked="checked"';
+ }
+
+}
+else
+{
+ if (isset($_COOKIE['CatAll']) &&  $_COOKIE['CatAll']=='ALL') 
+ {
+ echo 'checked="checked"';
+ }
+ else
+ {
+ if (isset($_COOKIE['Category']) &&  in_array($EM_Category->id, $_SESSION['my_cookie_arr'])) echo 'checked="checked"';
+ }
+ 
+}
+
+
+?>><?php echo $EM_Category->name; ?></div>
 			<?php endforeach; ?>		
 		<!-- END Multi Category Search -->
 		<?php endif; ?>
@@ -115,7 +195,7 @@
 				$em_states = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT location_state FROM ".EM_LOCATIONS_TABLE." WHERE location_state IS NOT NULL AND location_state != '' AND location_country=%s $cond ORDER BY location_state", $country), ARRAY_N);
 				foreach($em_states as $state){
 					?>
-					 <option <?php echo (!empty($_REQUEST['state']) && $_REQUEST['state'] == $state[0]) ? 'selected="selected"':''; ?>><?php echo $state[0]; ?></option>
+					 <option <?php echo (!empty($_REQUEST['state']) && $_REQUEST['state'] == $state[0]) ? 'selected="selected"':((isset($_COOKIE['state']) && $_COOKIE['state']!='' && $_COOKIE['state']==$state[0] && $_REQUEST['action']!='search_events')? 'selected="selected"':''); ?>><?php echo $state[0]; ?></option>
 					<?php 
 				}
 			}
@@ -132,11 +212,23 @@
 		<!-- START Date Search -->
 		<span class="em-events-search-dates">
 			<?php _e('Dates from','dbem'); ?>:
-			<input type="text" id="em-date-start-loc" size="5"/>
-			<input type="hidden" id="em-date-start" name="scope[0]" value="<?php if( !empty($_REQUEST['scope'][0]) ) echo $_REQUEST['scope'][0]; ?>" />
+			<input type="text" id="em-date-start-loc" size="6" value="<?php if( (!empty($_REQUEST['scope'][0])  || empty($_REQUEST['scope'][0])) && $_REQUEST['action']=='search_events'  ) {echo $_REQUEST['scope'][0];}else
+{
+if(isset($_COOKIE['scope_0']) && $_COOKIE['scope_0']!='' && $_REQUEST['action']!='search_events')  echo $_COOKIE['scope_0'];
+}  ?>"/>
+			<input type="hidden" id="em-date-start" name="scope[0]" value="<?php if( (!empty($_REQUEST['scope'][0])  || empty($_REQUEST['scope'][0])) && $_REQUEST['action']=='search_events'  ) {echo $_REQUEST['scope'][0];}else
+{
+if(isset($_COOKIE['scope_0']) && $_COOKIE['scope_0']!='' && $_REQUEST['action']!='search_events')  echo $_COOKIE['scope_0'];
+}  ?>" />
 			<?php _e('to','dbem'); ?>
-			<input type="text" id="em-date-end-loc" size="5"/>
-			<input type="hidden" id="em-date-end" name="scope[1]" value="<?php if( !empty($_REQUEST['scope'][1]) ) echo $_REQUEST['scope'][1]; ?>" />
+			<input type="text" id="em-date-end-loc" size="6" value="<?php if( (!empty($_REQUEST['scope'][1])  || empty($_REQUEST['scope'][1])) && $_REQUEST['action']=='search_events'  ) {echo $_REQUEST['scope'][1];}else
+{
+if(isset($_COOKIE['scope_1']) && $_COOKIE['scope_1']!='' && $_REQUEST['action']!='search_events')  echo $_COOKIE['scope_1'];
+}  ?>"/>
+			<input type="hidden" id="em-date-end" name="scope[1]" value="<?php if( (!empty($_REQUEST['scope'][1])  || empty($_REQUEST['scope'][1])) && $_REQUEST['action']=='search_events'  ) {echo $_REQUEST['scope'][1];}else
+{
+if(isset($_COOKIE['scope_1']) && $_COOKIE['scope_1']!='' && $_REQUEST['action']!='search_events')  echo $_COOKIE['scope_1'];
+}  ?>" />
 		</span>
 		<!-- END Date Search -->
 		<?php endif; ?>
@@ -147,7 +239,7 @@
 		<?php if( !empty($search_text) || (get_option('dbem_search_form_text') && empty($search_text)) ): ?>
 		<!-- START General Search -->
 		<?php /* This general search will find matches within event_name, event_notes, and the location_name, address, town, state and country. */ ?>
-		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo $s; ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'"  />
+		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo (isset($_REQUEST['em_search']) && $_REQUEST['em_search']!='')? $_REQUEST['em_search']:((isset($_COOKIE['em_search']) && $_COOKIE['em_search']!='' && $_REQUEST['action']!='search_events')? $_COOKIE['em_search']:$s); ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'"  />
 		<!-- END General Search -->
 		<?php endif; ?>		
 		optional
@@ -155,8 +247,10 @@
 		<div id="sub" style="float:left;margin-top:10px;margin-left:10px;">
 		<?php do_action('em_template_events_search_form_ddm'); //depreciated, don't hook, use the one below ?>
 		<?php do_action('em_template_events_search_form_footer'); ?>
+		
 		<input type="hidden" name="action" value="search_events" />
-		<input type="submit" value="<?php echo $s_default; ?>" class="em-events-search-submit" />	
+		<input type="submit" value="<?php echo $s_default; ?>" class="em-events-search-submit" />
+		<input type="reset" value="<?php echo 'Reset'; ?>" class="em-events-search-submit" onclick="" id="reset"/>	
 		</div>	
 	</form>	
 </div>
