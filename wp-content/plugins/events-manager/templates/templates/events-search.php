@@ -15,7 +15,7 @@ setcookie("state", base64_encode($_REQUEST['state']),time()+604800);*/
 ?>
 <script type="text/javascript">
 
-$(document).ready(function() {
+//$(document).ready(function() {
   // Handler for .ready() called.
   
   
@@ -23,26 +23,46 @@ $(document).ready(function() {
   alert('reset');//$("#target").click();
 });*/
   
-  /*function reset1(ele) {
+  function reset12(ele) {
 
-alert('here');
-    $(ele).find(':input').each(function() {
-        switch(this.type) {
+//alert(ele);
+//alert(mainform.em_search.value);
+document.getElementById('em_search').value = '';
+document.getElementById('em-date-start-loc').value = '';
+document.getElementById('em-date-start').value = '';
+document.getElementById('em-date-end-loc').value = '';
+document.getElementById('em-date-end').value = '';
+
+
+tags = ele.getElementsByTagName('select');
+    for(i = 0; i < tags.length; i++) {
+        if(tags[i].type == 'select-one') {
+            tags[i].selectedIndex = 0;
+        }
+        else {
+            for(j = 0; j < tags[i].options.length; j++) {
+                tags[i].options[j].selected = false;
+            }
+        }
+    }
+	
+	 tags = ele.getElementsByTagName('input');
+    for(i = 0; i < tags.length; i++) {
+        switch(tags[i].type) {
             case 'password':
-            case 'select-multiple':
-            case 'select-one':
             case 'text':
-            case 'textarea':
-                $(this).val('');
+                tags[i].value = '';
                 break;
             case 'checkbox':
             case 'radio':
-                this.checked = false;
+                tags[i].checked = false;
+                break;
         }
-    });
+    }
 
-}*/
-});
+return false;
+}
+
 
 
 </script>
@@ -63,9 +83,9 @@ alert('here');
 	if(!empty($_REQUEST['scope']) && !is_array($_REQUEST['scope'])){ $_REQUEST['scope'] = explode(',',$_REQUEST['scope']); }
 	//get the events page to display search results
 	?>
-	<form action="<?php echo EM_URI; ?>" method="post" class="em-events-search-form">
+	<form action="<?php echo EM_URI; ?>" method="post" class="em-events-search-form" name="mainform">
 	
-
+<fieldset id="example_section_1">
 
 <div id="multicheck" style="width:630px;float:left;height:auto">
 		<?php if( !empty($search_categories) || (get_option('dbem_search_form_categories') && empty($search_categories)) ): ?>	
@@ -84,9 +104,10 @@ alert('here');
 			echo 'checked="checked"'; 
 			} ?> >Click for All categories.</div>
 			<div id="individualcheck" >	
-			<?php foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
+			<?php //var_dump($_REQUEST['category']);echo $_REQUEST['category'];exit; 
+			foreach(EM_Categories::get(array('orderby'=>'category_name')) as $EM_Category): ?>
 			 <div id="checks" style="width:150px;float:left;">
-			 <input name="category[]" type="checkbox"  class="em-events-search-category" value="<?php echo $EM_Category->id; ?>" <?php 
+			 <input name="category[]" type="checkbox"  class="em-events-search-category" value="<?php echo $EM_Category->id; ?>"  <?php 
 
 if(isset($_REQUEST['action']) && $_REQUEST['action']=='search_events')
 {
@@ -96,7 +117,9 @@ if(isset($_REQUEST['action']) && $_REQUEST['action']=='search_events')
  }
  else
  {
- if (isset($_REQUEST['category']) && in_array($EM_Category->id, $_REQUEST['category'])) echo 'checked="checked"';
+  if (isset($_REQUEST['category']) && in_array($EM_Category->id,$_REQUEST['category']))
+  
+   echo 'checked="checked"';
  }
 
 }
@@ -233,13 +256,13 @@ if(isset($_COOKIE['scope_1']) && $_COOKIE['scope_1']!='' && $_REQUEST['action']!
 		<!-- END Date Search -->
 		<?php endif; ?>
 		</div>
-		<div id="gen_search" style=float:left;width:390px;margin-top:10px;">
+		<div id="gen_search" style="float:left;width:390px;margin-top:10px;">
 		<?php do_action('em_template_events_search_form_header'); ?>
 		General search word
 		<?php if( !empty($search_text) || (get_option('dbem_search_form_text') && empty($search_text)) ): ?>
 		<!-- START General Search -->
 		<?php /* This general search will find matches within event_name, event_notes, and the location_name, address, town, state and country. */ ?>
-		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo (isset($_REQUEST['em_search']) && $_REQUEST['em_search']!='')? $_REQUEST['em_search']:((isset($_COOKIE['em_search']) && $_COOKIE['em_search']!='' && $_REQUEST['action']!='search_events')? $_COOKIE['em_search']:$s); ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'"  />
+		<input type="text" name="em_search" class="em-events-search-text" value="<?php echo (isset($_REQUEST['em_search']) && $_REQUEST['em_search']!='')? $_REQUEST['em_search']:((isset($_COOKIE['em_search']) && $_COOKIE['em_search']!='' && $_REQUEST['action']!='search_events')? $_COOKIE['em_search']:$s); ?>" onfocus="if(this.value=='<?php echo $s_default; ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $s_default; ?>'"  id="em_search"/>
 		<!-- END General Search -->
 		<?php endif; ?>		
 		optional
@@ -250,7 +273,106 @@ if(isset($_COOKIE['scope_1']) && $_COOKIE['scope_1']!='' && $_REQUEST['action']!
 		
 		<input type="hidden" name="action" value="search_events" />
 		<input type="submit" value="<?php echo $s_default; ?>" class="em-events-search-submit" />
-		<input type="reset" value="<?php echo 'Reset'; ?>" class="em-events-search-submit" onclick="" id="reset"/>	
+		<input type="reset" value="<?php echo 'Reset '; ?>" class="em-events-search-submit" onclick="return reset12(example_section_1);" id="reset123"/>	
 		</div>	
+		</fieldset>
 	</form>	
 </div>
+
+<div class="share"> <a href="#">Share it</a><!--<textarea  name="link" class="em-events-search-text" value="<?php //echo "here"; ?>"  id="link"/>-->  <textarea class=""  rows="2"  style="resize: none;"  ><?php
+$link='http://'.$_SERVER['HTTP_HOST'].'/Gasket/?page_id=19'.'&search_from=url';
+if(isset($_GET['text_search'])&& $_GET['text_search']!='' )
+{
+$link.='&text_search='.$_GET['text_search'];
+}
+else if( isset($_REQUEST['em_search'])&& $_REQUEST['em_search']!='')
+{
+$link.='&text_search='.$_REQUEST['em_search'];
+}
+else if( isset($_COOKIE['em_search'])&& $_COOKIE['em_search']!='' && $_REQUEST['action'] != 'search_events')
+{
+$link.='&text_search='.$_COOKIE['em_search'];
+}
+
+if(isset($_GET['state'])&& $_GET['state']!='' )
+{
+		
+		$link.='&state='.$_GET['state'];
+		
+}
+else if( isset($_REQUEST['state'])&& $_REQUEST['state']!='')
+{
+$link.='&state='.$_REQUEST['state'];
+}
+else if( isset($_COOKIE['state'])&& $_COOKIE['state']!='' && $_REQUEST['action'] != 'search_events')
+{
+
+	if($_COOKIE['state']=='BLANK' )
+	{
+	
+	}
+	else
+	{
+	$link.='&state='.$_COOKIE['state'];
+	}
+}
+
+if(isset($_GET['scope_0'])&& $_GET['scope_0']!='' )
+{
+$link.='&scope_0='.$_REQUEST['scope'][0];
+}
+else if( isset($_REQUEST['scope'][0])&& $_REQUEST['scope'][0]!='')
+{
+$link.='&scope_0='.$_REQUEST['scope'][0];
+}
+else if( isset($_COOKIE['scope_0'])&& $_COOKIE['scope_0']!='' && $_REQUEST['action'] != 'search_events')
+{
+$link.='&scope_0='.$_COOKIE['scope_0'];
+}
+
+if(isset($_GET['scope_1'])&& $_GET['scope_1']!='' )
+{
+$link.='&scope_1='.$_GET['scope_1'];
+}
+else if( isset($_REQUEST['scope'][1])&& $_REQUEST['scope'][1]!='')
+{
+$link.='&scope_1='.$_REQUEST['scope'][1];
+}
+else if( isset($_COOKIE['scope_1'])&& $_COOKIE['scope_1']!=''&& $_REQUEST['action'] != 'search_events' )
+{
+$link.='&scope_1='.$_COOKIE['scope_1'];
+}
+
+if(isset($_GET['category'])&& $_GET['category']!='' )
+{
+$link.='&category='.$_GET['category'];
+}
+else if( isset($_REQUEST['category'])&& $_REQUEST['category']!='' )
+{
+$l='';
+if(isset($_REQUEST['category']))
+{
+foreach($_REQUEST['category'] as $key=>$value)
+{
+$l=$l.$value.',';
+}
+$l = substr($l, 0, -1); 
+$link.='&category='.$l;
+}
+
+
+}
+else if( isset($_SESSION['my_cookie_arr'])&& $_SESSION['my_cookie_arr']!=''&& $_REQUEST['action'] != 'search_events' && isset($_COOKIE['Category']) )
+{
+$l='';
+foreach($_SESSION['my_cookie_arr'] as $key=>$value)
+{
+$l=$l.$value.',';
+}
+$l = substr($l, 0, -1); 
+$link.='&category='.$l;
+}
+
+
+
+ echo $link; ?></textarea></div>

@@ -9,6 +9,7 @@
  * @return string
  */
 function em_content($page_content) {
+//echo"<pre>";print_r($page_content);echo $page_content;exit;
 	global $post, $wpdb, $wp_query, $EM_Event, $EM_Location, $EM_Category;
 	$events_page_id = get_option ( 'dbem_events_page' );
 	$locations_page_id = get_option( 'dbem_locations_page' );
@@ -22,11 +23,18 @@ function em_content($page_content) {
 		'owner' => false,
 		'pagination' => 1
 	);
-	if( in_array($post->ID, array($events_page_id, $locations_page_id, $categories_page_id, $edit_bookings_page_id, $edit_events_page_id, $edit_locations_page_id, $my_bookings_page_id)) ){
+
+$a=is_front_page();
+//echo $a;
+	if( in_array($post->ID, array($events_page_id, $locations_page_id, $categories_page_id, $edit_bookings_page_id, $edit_events_page_id, $edit_locations_page_id, $my_bookings_page_id)) || ($a==1) ){ 
 		$content = apply_filters('em_content_pre', '', $page_content);
-		if( empty($content) ){
+		
+		if( empty($content) )
+		{
+			
 			ob_start();
-			if ( $post->ID == $events_page_id && $events_page_id != 0 ) {
+			if ( ($post->ID == $events_page_id && $events_page_id != 0) || $a == 1 ) 
+			{
 				if ( !empty($_REQUEST['calendar_day']) ) {
 					//Events for a specific day
 					em_locate_template('templates/calendar-day.php',true, array('args'=>$args));
@@ -36,6 +44,7 @@ function em_content($page_content) {
 				}elseif ( is_object($EM_Event)) {
 					em_locate_template('templates/event-single.php',true, array('args'=>$args));	
 				}else{
+				
 					// Multiple events page
 					$args['orderby'] = get_option('dbem_events_default_orderby');
 					$args['order'] = get_option('dbem_events_default_order');
@@ -72,21 +81,47 @@ function em_content($page_content) {
 			}elseif( $post->ID == $my_bookings_page_id && $my_bookings_page_id != 0 ){
 				em_my_bookings();
 			}
+			
 			$content = ob_get_clean();
+			
 			//If disable rewrite flag is on, then we need to add a placeholder here
 			if( get_option('dbem_disable_title_rewrites') == 1 ){
 				$content = str_replace('#_PAGETITLE', em_content_page_title(''),get_option('dbem_title_html')) . $content;
 			}
 			//Now, we either replace CONTENTS or just replace the whole page
 			if( preg_match('/CONTENTS/', $page_content) ){
+			//echo $content.$page_content;exit;
 				$content = str_replace('CONTENTS',$content,$page_content);
 			}
 			if(get_option('dbem_credits')){
 				$content .= '<p style="color:#999; font-size:11px;">Powered by <a href="http://wp-events-plugin.com" style="color:#999;" target="_blank">Events Manager</a></p>';
 			}
 		}
+		//echo $content;exit;
 		return apply_filters('em_content', '<div id="em-wrapper">'.$content.'</div>');
 	}
+	
+					/*// Multiple events page
+					$args['orderby'] = get_option('dbem_events_default_orderby');
+					$args['order'] = get_option('dbem_events_default_order');
+					if (get_option ( 'dbem_display_calendar_in_events_page' )){
+						$args['long_events'] = 1;
+						em_locate_template('templates/events-calendar.php',true, array('args'=>$args));
+					}else{
+						//Intercept search request, if defined
+						$args['scope'] = get_option('dbem_events_page_scope');
+						if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'search_events' ){
+							$args = EM_Events::get_post_search($args + $_REQUEST);
+						}
+						em_locate_template('templates/events-list.php', true, array('args'=>$args));
+					}
+				
+	//Now, we either replace CONTENTS or just replace the whole page
+			if( preg_match('/CONTENTS/', $page_content) ){
+			echo $content.$page_content;exit;
+				$content = str_replace('CONTENTS',$content,$page_content);
+			}
+			//return apply_filters('em_content', '<div id="em-wrapper">'.$content.'</div>');*/
 	return $page_content;
 }
 add_filter('the_content', 'em_content');

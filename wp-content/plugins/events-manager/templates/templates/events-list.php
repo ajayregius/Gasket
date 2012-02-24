@@ -27,8 +27,8 @@ if(isset($_REQUEST['action']))
 	{
 	
 	
-	//echo "<pre>";print_r($args) ;//exit;
-	
+	//echo "<pre>";print_r($args) ;exit;
+//	var_dump($_REQUEST['category']);echo $_REQUEST['category'];exit;
 	
 	
 	}
@@ -39,6 +39,10 @@ else
 //echo "<pre>";print_r($args) ;//exit;
 //echo "not done ";//exit;
 
+   if($_GET['search_from']!='url') 
+   {
+  
+   
 			if(isset($_COOKIE['em_search']) && $_COOKIE['em_search']!='')
 			{
 			$args['search']=$_COOKIE['em_search'];
@@ -70,12 +74,82 @@ else
 				{
 				$args['state']='';
 				}
+				
+		}
+		else
+		{
+		   $_REQUEST['action'] = 'search_events';
+		  
+		  if(isset($_GET['state']) && $_GET['state']!='')
+		  {
+		  $args['state']=$_GET['state'];
+		   $_REQUEST['state']=$_GET['state'];
+		  }
+		  else
+		  {
+		  $args['state']='';
+		  }
+		   
+		  if(isset($_GET['text_search']) && $_GET['text_search']!='')
+		  {
+		  $args['search']=$_GET['text_search'];
+		  $_REQUEST['em_search']=$_GET['text_search'];
+		  }
+		  else
+		  {
+		  //$args['em_search']='';
+		  } 
+		   
+		   
+		   if((isset($_GET['scope_0']) && $_GET['scope_0']!='' )  ||(isset($_GET['scope_1']) && $_GET['scope_1']!=''))
+		   {
+		   $args['scope']='';
+				   if(isset($_GET['scope_0']) && $_GET['scope_0']!='')
+				  {
+				  //$args['search']=$_GET['text_search'];
+				  $args['scope']=$_GET['scope_0'].',';
+				  $_REQUEST['scope'][0]=$_GET['scope_0'];
+				  }
+				  else
+				  {
+				   $args['scope']=',';
+				  //$args['em_search']='';
+				  } 
+				   if(isset($_GET['scope_1']) && $_GET['scope_1']!='')
+				  {
+				  //$args['search']=$_GET['text_search'];
+				  $args['scope']= $args['scope'].$_GET['scope_1'];
+				  $_REQUEST['scope'][1]=$_GET['scope_1'];
+				  }
+				  else
+				  {
+				   $args['scope']= $args['scope'];
+				  //$args['em_search']='';
+				  } 
+		 
+		  }
+		  
+		  
+		  if(isset($_GET['category']) && $_GET['category']!='')
+		  {
+		  $args['category']=$_GET['category'];
+		  $_REQUEST['category']=$_GET['category'];
+		  $_REQUEST['category']=explode(',',$_REQUEST['category']);
+		  //var_dump($_REQUEST['category']);echo $_REQUEST['category'];exit;
+		  }
+		  else
+		  {
+		  //$args['em_search']='';
+		  } 
+		  
+		   
+		}		
 //$args['search']="dipendu";
 //$args['category']='11';
 
 }
-
-
+//echo "<pre>";print_r($_COOKIE) ;
+//echo "<pre>";print_r($_REQUEST) ;
 //echo "<pre>";print_r($args) ;
 
 $events_count = EM_Events::count( apply_filters('em_content_events_args', $args) );
